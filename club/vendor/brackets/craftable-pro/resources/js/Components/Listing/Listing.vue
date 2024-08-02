@@ -81,7 +81,7 @@
               :searchForm="searchForm"
               :resetSearch="resetSearch"
             >
-              <div class="w-3/6 md:w-2/6">
+              <div class="w-full">
                 <TextInput
                   v-model="searchForm.search"
                   name="search"

@@ -6,7 +6,7 @@
       event.updated_at
     ).format('DD.MM.YYYY')}`"
   >
-    <Button
+    <Button style="background-color:darkorange;border-radius: 20px"
       :leftIcon="ArrowDownTrayIcon"
       @click="submit"
       :loading="form.processing"

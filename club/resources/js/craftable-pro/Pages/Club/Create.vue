@@ -1,12 +1,12 @@
 <template>
   <PageHeader sticky :title="$t('craftable-pro', 'Create Club')">
-    <Button
+    <Button style="background-color:darkorange;border-radius: 20px"
       :leftIcon="ArrowDownTrayIcon"
       @click="submit"
       :loading="form.processing"
       v-can="'craftable-pro.club.create'"
     >
-      {{ $t("craftable-pro", "Save") }}
+      <span class=" font-bold">{{ $t("craftable-pro", "Save") }}</span>
     </Button>
   </PageHeader>
 

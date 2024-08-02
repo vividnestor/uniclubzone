@@ -1,6 +1,6 @@
 <template>
   <PageHeader sticky :title="$t('craftable-pro', 'Create Event')">
-    <Button
+    <Button style="background-color:darkorange;border-radius: 20px"
       :leftIcon="ArrowDownTrayIcon"
       @click="submit"
       :loading="form.processing"
@@ -9,7 +9,6 @@
       {{ $t("craftable-pro", "Save") }}
     </Button>
   </PageHeader>
-
   <Form :form="form" :submit="submit" :categoryOptions="categoryOptions" :clubOptions="clubOptions" />
 </template>
 
@@ -33,14 +32,15 @@ const props = defineProps<Props>();
 const { form, submit } = useForm<EventForm>(
     {
           title: "", 
-content: "", 
-slug: "", 
-published_at: "", 
-club_id: "", 
-category_id: "", 
-image: []
+          content: "", 
+          slug: "", 
+          published_at: "", 
+          club_id: "", 
+          category_id: "", 
+          image: []
     },
     route("craftable-pro.events.store"),
     "post"
 );
 </script>
+

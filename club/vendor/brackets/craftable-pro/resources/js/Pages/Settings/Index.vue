@@ -1,6 +1,6 @@
 <template>
   <PageHeader sticky :title="$t('craftable-pro', 'Settings')">
-    <Button
+    <Button style="background-color:darkorange;border-radius: 20px"
       :leftIcon="ArrowDownTrayIcon"
       @click="submit"
       :loading="form.processing"

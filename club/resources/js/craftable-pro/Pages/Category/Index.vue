@@ -1,6 +1,6 @@
 <template>
   <PageHeader :title="$t('craftable-pro', 'Categories')">
-    <Button
+    <Button style="background-color:darkorange;border-radius: 20px"
       :leftIcon="PlusIcon"
       :as="Link"
       :href="route('craftable-pro.categories.create')"

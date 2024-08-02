@@ -2,7 +2,7 @@
   <PageHeader :title="$t('craftable-pro', 'Media')">
     <ImageUploadModal @imageUploaded="imageUploaded">
       <template #button="{ setIsOpen }">
-        <Button
+        <Button style="background-color:darkorange;border-radius: 20px"
           v-can="'craftable-pro.media.upload'"
           :left-icon="PlusIcon"
           as="button"
@@ -116,7 +116,7 @@
             ]"
           >
             <li v-for="file in data.data" :key="file.id" class="relative">
-              <button
+              <button 
                 type="button"
                 @click="selectFile(file)"
                 @keyup.esc="selectedImage = null, hasFocus = false"
@@ -331,7 +331,7 @@
 
           <!-- Buttons -->
           <div v-if="showFileInfo" class="flex gap-4">
-            <Button
+            <Button 
               as="a"
               :leftIcon="CloudArrowDownIcon"
               :href="selectedImage.original_url"

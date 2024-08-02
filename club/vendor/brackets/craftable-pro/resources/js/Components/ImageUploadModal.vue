@@ -17,7 +17,7 @@
     </template>
 
     <template #buttons="{ setIsOpen }">
-      <Button
+      <Button style="background-color:darkorange;border-radius: 20px"
         @click="
           () => {
             setIsOpen(false);

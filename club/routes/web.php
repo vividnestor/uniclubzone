@@ -16,8 +16,41 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('Club/', function () {
+    return view('Club/index');
+});
+Route::get('Club/aboutClub', function () {
+    return view('Club/aboutClub');
+});
+Route::get('Club/organizationalChart', function () {
+    return view('Club/organizationalChart');
+});
+Route::get('Club/membership', function () {
+    return view('Club/membership');
+});
+Route::get('Club/batches', function () {
+    return view('Club/batches');
+});
 
-
+// item event
+Route::get('Club/Events/', function () {
+    return view('Club/Events/index');
+});
+Route::get('Club/Events/event', function () {
+    return view('Club/Events/event');
+});
+Route::get('Club/Events/competition', function () {
+    return view('Club/Events/competition');
+});
+Route::get('Club/Events/gallery', function () {
+    return view('Club/Events/gallery');
+});
+Route::get('User/', function () {
+    return view('User/index');
+});
+Route::get('User/participation', function () {
+    return view('User/participation');
+});
 
 Route::craftablePro('admin');
 

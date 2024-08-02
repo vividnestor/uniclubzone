@@ -1,8 +1,6 @@
 <template>
   <PageContent>
     <div class="mx-auto max-w-3xl 2xl:max-w-4xl">
-      
-
       <Card>
         <div class="space-y-4">
             <TextInput
@@ -23,12 +21,6 @@
                 v-model="form.active"
                 name="active"
                 :label="$t('craftable-pro', 'Active')"
-            /> 
-
-            <Checkbox
-                v-model="form.delete_flag"
-                name="delete_flag"
-                :label="$t('craftable-pro', 'Delete Flag')"
             /> 
 
             <DatePicker

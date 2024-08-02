@@ -1,6 +1,6 @@
 <template>
   <PageHeader :title="$t('craftable-pro', 'Events')">
-    <Button
+    <Button style="background-color:darkorange;border-radius: 20px"
       :leftIcon="PlusIcon"
       :as="Link"
       :href="route('craftable-pro.events.create')"
@@ -16,6 +16,7 @@
       :baseUrl="route('craftable-pro.events.index')"
       :data="events"
       dataKey="events"
+      :withBulkSelect="false"
     >
       <template #bulkActions="{ bulkAction }">
         <Modal type="danger">

@@ -1,10 +1,14 @@
 <template>
-  <PageHeader :title="$t('craftable-pro', 'Users')">
+  <PageHeader :title="$t( 'Member List')">
     <Modal alignButtons="right" size="sm">
       <template #trigger="{ setIsOpen }">
-        <Button @click="() => setIsOpen(true)" :leftIcon="PlusIcon">
-          {{ $t("craftable-pro", "Invite user") }}
-        </Button>
+        <div v-for="items in craftableProUsers.data" :key="items">
+          <div v-for="item in items.roles" :key="item">
+            <Button style="background-color:darkorange;border-radius: 20px" v-if="item.pivot.model_id === user.id && (item.name ==='administrator'||item.name==='club_manager')" @click="() => setIsOpen(true)" :leftIcon="PlusIcon">
+              {{ $t("craftable-pro", "Invite user") }}
+            </Button>
+          </div> 
+        </div>
       </template>
       <template #title>
         {{ $t("craftable-pro", "Invite user") }}
@@ -48,6 +52,7 @@
       :baseUrl="route('craftable-pro.craftable-pro-users.index')"
       :data="craftableProUsers"
       dataKey="craftableProUsers"
+      :withBulkSelect="false"
     >
       <template #actions>
         <FiltersDropdown
@@ -190,44 +195,57 @@
       </template>
 
       <template #tableHead>
-        <ListingHeaderCell sortBy="id" class="w-14">
-          {{ $t("craftable-pro", "ID") }}
+        <ListingHeaderCell  sortBy="id" class="w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("No") }}
         </ListingHeaderCell>
 
-        <ListingHeaderCell sortBy="first_name">
-          {{ $t("craftable-pro", "User") }}
+        <ListingHeaderCell sortBy="first_name" class=" w-3/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Name") }}
         </ListingHeaderCell>
 
-        <ListingHeaderCell>
-          {{ $t("craftable-pro", "Role") }}
+        <ListingHeaderCell class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Gender") }}
         </ListingHeaderCell>
 
-        <ListingHeaderCell class="text-center">
+        <!-- <ListingHeaderCell class="text-center w-12">
           {{ $t("craftable-pro", "2FA") }}
+        </ListingHeaderCell> -->
+
+        <ListingHeaderCell class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Role") }}
+        </ListingHeaderCell>
+        <ListingHeaderCell class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Department") }}
+        </ListingHeaderCell>
+        <ListingHeaderCell  class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Year") }}
+        </ListingHeaderCell>
+        <ListingHeaderCell  class=" w-2/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Phone") }}
         </ListingHeaderCell>
 
-        <ListingHeaderCell>
-          {{ $t("craftable-pro", "Status") }}
-        </ListingHeaderCell>
-
-        <ListingHeaderCell
+        <!-- <ListingHeaderCell
           v-if="$page.props.config?.craftable_pro?.track_user_last_active_time"
           sortBy="last_active_at"
         >
           {{ $t("craftable-pro", "Last active") }}
+        </ListingHeaderCell> -->
+
+        <ListingHeaderCell  class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("craftable-pro", "Status") }}
+        </ListingHeaderCell>
+        <ListingHeaderCell  class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t( "Action") }}
         </ListingHeaderCell>
 
-        <ListingHeaderCell>
-          <span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span>
-        </ListingHeaderCell>
       </template>
 
       <template #tableRow="{ item, action }: any">
-        <ListingDataCell>
+        <ListingDataCell class=" w-1/12 text-center" style="color:black">
           {{ item.id }}
         </ListingDataCell>
 
-        <ListingDataCell>
+        <ListingDataCell class=" w-3/12 text-start" style="color:black">
           <div class="flex items-center">
             <Avatar
               :src="item.avatar_url"
@@ -242,14 +260,25 @@
             </div>
           </div>
         </ListingDataCell>
+        <ListingDataCell class=" w-1/12 text-center">
+          <span class="text-sm font-normal leading-5 text-black">
+            {{ "Gender" }}
+          </span>
+        </ListingDataCell>
 
-        <ListingDataCell>
-          <span class="text-sm font-normal leading-5 text-slate-500">
+        <ListingDataCell class=" w-1/12 text-center">
+          <span class="text-sm font-normal leading-5 text-black">
             {{ item.roles.length > 0 ? item.roles[0].name : "" }}
           </span>
         </ListingDataCell>
 
-        <ListingDataCell class="text-center">
+        <ListingDataCell class=" w-1/12 text-center">
+          <span class="text-sm font-normal leading-5 text-black">
+            {{ "Department" }}
+          </span>
+        </ListingDataCell>
+
+        <!-- <ListingDataCell class="text-center">
           <Tooltip v-if="item.has_enabled_two_factor_authentication">
             <template #button>
               <CheckCircleIconOutline
@@ -282,9 +311,19 @@
               {{ $t("craftable-pro", "2FA is not required") }}
             </template>
           </Tooltip>
+        </ListingDataCell> -->
+        <ListingDataCell class=" w-1/12 text-center">
+          <span class="text-sm font-normal leading-5 text-black">
+            {{ "Year" }}
+          </span>
+        </ListingDataCell>
+        <ListingDataCell class=" w-3/12 text-center">
+          <span class="text-sm font-normal leading-5 text-black">
+            {{ "068809810" }}
+          </span>
         </ListingDataCell>
 
-        <ListingDataCell class="text-left">
+        <ListingDataCell class=" w-1/12 text-center">
           <template v-if="item.email_verified_at">
             <div v-if="item.active">
               <Tag :icon="CheckCircleIcon" color="success" rounded size="sm">
@@ -311,7 +350,7 @@
           </div>
         </ListingDataCell>
 
-        <ListingDataCell
+        <!-- <ListingDataCell
           v-if="$page.props.config?.craftable_pro?.track_user_last_active_time"
         >
           <div v-if="item.email_verified_at" class="flex gap-2">
@@ -346,9 +385,9 @@
               {{ $t("craftable-pro", "Resend invitation") }}
             </Button>
           </template>
-        </ListingDataCell>
+        </ListingDataCell> -->
 
-        <ListingDataCell>
+        <ListingDataCell class=" w-1/12 text-center">
           <div class="flex justify-end">
             <Dropdown
               noContentPadding
@@ -530,6 +569,9 @@ import dayjs from "dayjs";
 import { CraftableProUserInviteUserForm } from "./types";
 import { useToast } from "@brackets/vue-toastification";
 import {Tooltip} from "../../Components";
+import { useUser } from "../../hooks/useUser";
+
+const { user } = useUser();
 
 interface Props {
   craftableProUsers: PaginatedCollection<CraftableProUser>;

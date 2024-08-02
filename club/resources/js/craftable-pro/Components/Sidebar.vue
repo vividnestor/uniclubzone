@@ -1,7 +1,6 @@
 <template>
   <div>
     <nav class="mt-5 space-y-1">
-      <SidebarGroup :title="$t('craftable-pro', 'Content')">
         <SidebarItem
           :href="route('craftable-pro.media.index')"
           :icon="PhotoIcon"
@@ -10,51 +9,40 @@
           {{ $t("craftable-pro", "Media") }}
         </SidebarItem>
         <SidebarItem
-                        :href="route('craftable-pro.clubs.index')"
-                        :icon="CubeTransparentIcon"
-                        v-can="'craftable-pro.club.index'"
-                    >
-                        {{ $t("craftable-pro", "Clubs") }}
-                    </SidebarItem>
-                    <SidebarItem
-                        :href="route('craftable-pro.events.index')"
-                        :icon="CubeTransparentIcon"
-                        v-can="'craftable-pro.event.index'"
-                    >
-                        {{ $t("craftable-pro", "Events") }}
-                    </SidebarItem>
-                    <SidebarItem
-                        :href="route('craftable-pro.categories.index')"
-                        :icon="CubeTransparentIcon"
-                        v-can="'craftable-pro.category.index'"
-                    >
-                        {{ $t("craftable-pro", "Categories") }}
-                    </SidebarItem>
-                    <SidebarItem
-                        :href="route('craftable-pro.club-pages.index')"
-                        :icon="CubeTransparentIcon"
-                        v-can="'craftable-pro.club-page.index'"
-                    >
-                        {{ $t("craftable-pro", "Club Pages") }}
-                    </SidebarItem>
-                    <!--AppendGeneratorLink-->
-      </SidebarGroup>
-
-      <SidebarGroup
-        :title="$t('craftable-pro', 'System')"
-        v-can:any="[
-          'craftable-pro.craftable-pro-user.index',
-          'craftable-pro.role.index',
-          'craftable-pro.translation.index',
-          'craftable-pro.settings.edit',
-        ]"
-      >
+          :href="route('craftable-pro.clubs.index')"
+          :icon="CubeTransparentIcon"
+            v-can="'craftable-pro.club.index'"
+        >
+          {{ $t("craftable-pro", "Clubs") }}
+        </SidebarItem>
+        <SidebarItem
+          :href="route('craftable-pro.events.index')"
+          :icon="CubeTransparentIcon"
+            v-can="'craftable-pro.event.index'"
+        >
+          {{ $t("craftable-pro", "Events") }}
+        </SidebarItem>
+        <SidebarItem
+          :href="route('craftable-pro.categories.index')"
+          :icon="CubeTransparentIcon"
+            v-can="'craftable-pro.category.index'"
+        >
+          {{ $t("craftable-pro", "Categories") }}
+        </SidebarItem>
+        <SidebarItem
+          :href="route('craftable-pro.club-pages.index')"
+          :icon="CubeTransparentIcon"
+            v-can="'craftable-pro.club-page.index'"
+        >
+          {{ $t("craftable-pro", "Club Pages") }}
+        </SidebarItem>
+        <!--AppendGeneratorLink-->
         <SidebarItem
           :href="route('craftable-pro.craftable-pro-users.index')"
           :icon="UsersIcon"
           v-can="'craftable-pro.craftable-pro-user.index'"
         >
-          {{ $t("craftable-pro", "Access") }}
+          {{ $t("Members") }}
         </SidebarItem>
         <SidebarItem
           :href="route('craftable-pro.roles.index')"
@@ -77,7 +65,6 @@
         >
           {{ $t("craftable-pro", "Settings") }}
         </SidebarItem>
-      </SidebarGroup>
     </nav>
   </div>
 </template>

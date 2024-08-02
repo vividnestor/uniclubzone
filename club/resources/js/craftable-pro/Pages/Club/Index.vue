@@ -1,125 +1,66 @@
 <template>
-  <PageHeader :title="$t('craftable-pro', 'Clubs')">
-    <Button
+  
+  <PageHeader :title="$t('Clubs List')">
+    <Button style="background-color:darkorange;border-radius: 20px"
       :leftIcon="PlusIcon"
       :as="Link"
       :href="route('craftable-pro.clubs.create')"
       v-can="'craftable-pro.club.create'"
     >
-      {{ $t("craftable-pro", "New Club") }}
+    <span class=" font-bold">{{ $t("craftable-pro", "New Club") }}</span>
     </Button>
     
   </PageHeader>
 
   <PageContent>
-    <Listing
+  
+    
+    <Listing 
       :baseUrl="route('craftable-pro.clubs.index')"
       :data="clubs"
       dataKey="clubs"
+      :withBulkSelect="false"
     >
-      <template #bulkActions="{ bulkAction }">
-        <Modal type="danger">
-          <template #trigger="{ setIsOpen }">
-            <Button
-              @click="() => setIsOpen(true)"
-              color="gray"
-              variant="outline"
-              size="sm"
-              :leftIcon="TrashIcon"
-              v-can="'craftable-pro.club.destroy'"
-            >
-              {{ $t("craftable-pro", "Delete") }}
-            </Button>
-          </template>
-
-          <template #title>
-            {{ $t("craftable-pro", "Delete Club") }}
-          </template>
-          <template #content>
-            {{
-              $t(
-                "craftable-pro",
-                "Are you sure you want to delete selected Club? All data will be permanently removed from our servers forever. This action cannot be undone."
-              )
-            }}
-          </template>
-
-          <template #buttons="{ setIsOpen }">
-            <Button
-              @click.prevent="
-                () => {
-                  bulkAction('post', route('craftable-pro.clubs.bulk-destroy'), {
-                    onFinish: () => setIsOpen(false),
-                  });
-                }
-              "
-              color="danger"
-              v-can="'craftable-pro.club.destroy'"
-            >
-              {{ $t("craftable-pro", "Delete") }}
-            </Button>
-            <Button
-              @click.prevent="() => setIsOpen()"
-              color="gray"
-              variant="outline"
-            >
-              {{ $t("craftable-pro", "Cancel") }}
-            </Button>
-          </template>
-        </Modal>
-      </template>
       <template #tableHead>
         
-        <ListingHeaderCell sortBy="id">
-            {{ $t("craftable-pro", "Id") }}
+        
+        <ListingHeaderCell class=" w-1/8 text-center font-bold" style="color:black">
+            {{ $t("No") }}
         </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="name">
-            {{ $t("craftable-pro", "Name") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="description">
-            {{ $t("craftable-pro", "Description") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="active">
-            {{ $t("craftable-pro", "Active") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="delete_flag">
-            {{ $t("craftable-pro", "Delete Flag") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="published_at">
-            {{ $t("craftable-pro", "Published At") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="craftable_pro_users_id">
-            {{ $t("craftable-pro", "Craftable Pro User") }}
+        <ListingHeaderCell class=" w-2/8 text-center font-bold text-black" style="color:black">
+            {{ $t("Club Name") }}
         </ListingHeaderCell>
-        <ListingHeaderCell>
-          <span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span>
+        <ListingHeaderCell class=" w-2/8 text-center font-bold text-black" style="color:black">
+            {{ $t("Club Manager") }}
+        </ListingHeaderCell> 
+        <ListingHeaderCell class=" w-1/8 text-center font-bold text-black" style="color:black">
+            {{ $t("craftable-pro", "Status") }}
+        </ListingHeaderCell> 
+        
+        <ListingHeaderCell class=" w-2/8 text-center font-bold text-black" style="color:black">
+          <span>{{ $t("craftable-pro", "Actions") }}</span>
         </ListingHeaderCell>
       </template>
-      <template #tableRow="{ item, action }: any">
+      <template style="" #tableRow="{ item, action }: any">
         
-        <ListingDataCell>
-             {{ item.id }}
+        <ListingDataCell class=" w-1/8 text-center" style="color:black">
+             0{{ item.id }}
         </ListingDataCell> 
-        <ListingDataCell>
+        <ListingDataCell class=" w-2/8 text-center" style="color:black">
              {{ item.name }}
-        </ListingDataCell> 
-        <ListingDataCell>
-             {{ item.description }}
-        </ListingDataCell> 
-        <ListingDataCell>
-            <ListingToggle name="active" v-model="item.active" :updateUrl="route('craftable-pro.clubs.update', item.id)" />
-        </ListingDataCell> 
-        <ListingDataCell>
-            <ListingToggle name="delete_flag" v-model="item.delete_flag" :updateUrl="route('craftable-pro.clubs.update', item.id)" />
-        </ListingDataCell> 
-        <ListingDataCell>
-            <Publish :publishedAt="item.published_at" :updateUrl="route('craftable-pro.clubs.update', item.id)" columnName="published_at" mode="dateTime"/>
-        </ListingDataCell> 
-        <ListingDataCell>
-             {{ item.craftable_pro_user.email }}
         </ListingDataCell>
-        <ListingDataCell>
-          <div class="flex items-center justify-end gap-3">
+        <ListingDataCell class=" w-2/8 text-center" style="color:black">
+             {{ item.craftable_pro_user.email }}
+        </ListingDataCell> 
+        <ListingDataCell class="w-1/8 text-center">
+            <!-- <ListingToggle name="active" v-model="item.active" :updateUrl="route('craftable-pro.clubs.update', item.id)" />  -->
+            <p class=" bg-green-700 p-1 rounded-2xl text-white text-center font-bold" v-if="item.active===true">Active</p>
+            <p class=" bg-yellow-500 p-1 rounded-2xl text-white text-center font-bold"  v-else="item.active===false">Die</p>
+        </ListingDataCell> 
+        
+        
+        <ListingDataCell class=" w-2/8 text-center">
+          <div class="flex items-center justify-center w-full">
             <IconButton
               :as="Link"
               :href="route('craftable-pro.clubs.edit', item)"

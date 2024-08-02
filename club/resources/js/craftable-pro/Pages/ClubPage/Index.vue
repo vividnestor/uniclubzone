@@ -1,6 +1,6 @@
 <template>
   <PageHeader :title="$t('craftable-pro', 'Club Pages')">
-    <Button
+    <Button style="background-color:darkorange;border-radius: 20px"
       :leftIcon="PlusIcon"
       :as="Link"
       :href="route('craftable-pro.club-pages.create')"
@@ -16,6 +16,7 @@
       :baseUrl="route('craftable-pro.club-pages.index')"
       :data="clubPages"
       dataKey="clubPages"
+      :withBulkSelect="false"
     >
       <template #bulkActions="{ bulkAction }">
         <Modal type="danger">
@@ -70,56 +71,50 @@
       </template>
       <template #tableHead>
         
-        <ListingHeaderCell>
-            {{ $t("craftable-pro", "Id") }}
+        <ListingHeaderCell style="color:black;font-weight: bold" class="w-1/11 text-center">
+            {{ $t("No") }}
         </ListingHeaderCell> 
-        <ListingHeaderCell>
+        <ListingHeaderCell style="color:black;font-weight: bold" class="w-2/11 text-center">
             {{ $t("craftable-pro", "Title") }}
         </ListingHeaderCell> 
-        <ListingHeaderCell>
+        <ListingHeaderCell style="color:black;font-weight: bold" class="w-3/11 text-center">
             {{ $t("craftable-pro", "Content") }}
         </ListingHeaderCell> 
-        <ListingHeaderCell>
-            {{ $t("craftable-pro", "Slug") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell>
+        <ListingHeaderCell style="color:black;font-weight: bold" class="w-2/11 text-center">
             {{ $t("craftable-pro", "Published At") }}
         </ListingHeaderCell> 
-        <ListingHeaderCell>
-            {{ $t("craftable-pro", "Craftable Pro Users Id") }}
+        <ListingHeaderCell style="color:black;font-weight: bold" class="w-1/11 text-center">
+            {{ $t( "Users") }}
         </ListingHeaderCell> 
-        <ListingHeaderCell>
-            {{ $t("craftable-pro", "Club Id") }}
+        <ListingHeaderCell style="color:black;font-weight: bold" class="w-1/11 text-center">
+            {{ $t("Club") }}
         </ListingHeaderCell>
-        <ListingHeaderCell>
-          <span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span>
+        <ListingHeaderCell style="color:black;font-weight: bold" class="w-1/11 text-center">
+          <span>{{ $t("Actions") }}</span>
         </ListingHeaderCell>
       </template>
       <template #tableRow="{ item, action }: any">
         
-        <ListingDataCell>
+        <ListingDataCell class="w-1/11 text-center" style="color:black">
              {{ item.id }}
         </ListingDataCell> 
-        <ListingDataCell>
+        <ListingDataCell class="w-2/11 text-center" style="color:black">
              {{ item.title }}
         </ListingDataCell> 
-        <ListingDataCell>
+        <ListingDataCell class="w-3/11 text-center" style="color:black">
              {{ item.content }}
         </ListingDataCell> 
-        <ListingDataCell>
-             {{ item.slug }}
-        </ListingDataCell> 
-        <ListingDataCell>
+        <ListingDataCell class="w-2/11 flex justify-center" style="color:black">
             <Publish :publishedAt="item.published_at" :updateUrl="route('craftable-pro.club-pages.update', item.id)" columnName="published_at" mode="dateTime"/>
         </ListingDataCell> 
-        <ListingDataCell>
+        <ListingDataCell class="w-1/11 text-center" style="color:black">
              {{ item.craftable_pro_users_id }}
         </ListingDataCell> 
-        <ListingDataCell>
+        <ListingDataCell class="w-1/11 text-center" style="color:black">
              {{ item.club_id }}
         </ListingDataCell>
-        <ListingDataCell>
-          <div class="flex items-center justify-end gap-3">
+        <ListingDataCell  class="w-1/11 justify-center" style="color:black">
+          <div class="flex items-center justify-center gap-3">
             <IconButton
               :as="Link"
               :href="route('craftable-pro.club-pages.edit', item)"

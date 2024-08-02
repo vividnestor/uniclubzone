@@ -2,7 +2,7 @@
   <Dropdown noContentPadding :zIndex="50" contentClass="w-[calc(100vw-5rem)] sm:w-auto">
     <template #button>
       <IconButton
-        :icon="EllipsisVerticalIcon"
+        :icon="ChevronDownIcon"
         variant="ghost"
         color="gray"
         rounded
@@ -35,12 +35,15 @@
 
 <script setup lang="ts">
 import { MenuItem } from "@headlessui/vue";
-import { EllipsisVerticalIcon } from "@heroicons/vue/24/solid";
-import { Dropdown, IconButton } from "./index";
+import { ArrowsUpDownIcon, ChevronDownIcon } from "@heroicons/vue/24/solid";
+import { Dropdown, DropdownItem, IconButton } from "./index";
 import { usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
 import { PageProps } from "../types/page";
 import UserDropdownContent from "@/craftable-pro/Components/UserDropdown.vue";
+import { ArrowDownCircleIcon, ArrowDownIcon, ArrowDownOnSquareIcon } from "@heroicons/vue/24/outline";
+import { ArrowDownTrayIcon } from "@heroicons/vue/20/solid";
+import { dropPoint } from "@tiptap/pm/transform";
 
 const csrfToken = computed(() => (usePage().props as PageProps).csrf_token);
 </script>

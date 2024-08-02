@@ -1,13 +1,13 @@
 <template>
   <PageHeader :title="$t('craftable-pro', 'Roles')">
-    <Button
+    <Button style="background-color:darkorange;border-radius: 20px"
       @click.prevent="openRoleModal = true"
       class="mr-2"
       v-can="'craftable-pro.role.store'"
     >
       {{ $t('craftable-pro', "Add role")}}
     </Button>
-    <Button :as="Link" :href="`permissions`" v-can="'craftable-pro.role.edit'">
+    <Button style="background-color:darkorange;border-radius: 20px" :as="Link" :href="`permissions`" v-can="'craftable-pro.role.edit'">
       {{ $t("craftable-pro", "Manage permissions") }}
     </Button>
   </PageHeader>
