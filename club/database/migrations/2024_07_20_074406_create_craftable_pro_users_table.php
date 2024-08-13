@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('craftable_pro_users', function (Blueprint $table) {
             $table->id();
+            $table->string('google_id')->after('remember_token')->nullable()->unique();
 
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();

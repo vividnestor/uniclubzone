@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GoogleLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,9 @@ Route::get('/', function () {
 
 
 Route::craftablePro('admin');
+
+Route::get('/login/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/login/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
 /* Auto-generated admin routes */
 Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
