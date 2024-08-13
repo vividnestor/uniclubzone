@@ -118,6 +118,7 @@ class Provider extends AbstractProvider
      */
     public function userByIdentityToken(string $token): User
     {
+        dd("hellldjslkdf");
         $array = $this->getUserByToken($token);
 
         return $this->mapUserToObject($array);

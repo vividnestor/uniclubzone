@@ -105,7 +105,9 @@
                     </Link>
                     </div>
                     <div class="col-6 d-flex justify-content-end">
-                        <button class="btn btn-warning text-orange">Continue with Google</button>
+                        <button class="btn btn-warning text-orange">
+                            <a href="{{ url('/login/google') }}">Login</a>
+                        </button>
                     </div>
                 </div>
                 <div class="col-12 w-auto p-3">
@@ -118,9 +120,6 @@
                             Welcome to <br><br>
                             <span class="text-6xl"><u>Paragon Club List</u></span>
                         </h1>
-                    </div>
-                    <!-- Club list -->
-                    <div class="container">
                     </div>
                 </div>
                 <div class="w-full bg-slate-200 h-12 flex items-center justify-center">

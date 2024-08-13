@@ -101,7 +101,7 @@ return [
         'allowed_services' => [
             'microsoft' => false,
             'github' => false,
-            'google' => false,
+            'google' => true,
             'twitter' => false,
             'facebook' => false,
             'apple' => false,

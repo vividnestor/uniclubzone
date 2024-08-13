@@ -20,6 +20,7 @@ class Provider extends AbstractProvider
         'openid',
         'profile',
         'email',
+        'google_id',
     ];
 
     /**
