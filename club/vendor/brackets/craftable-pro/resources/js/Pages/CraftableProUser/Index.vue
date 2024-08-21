@@ -2,12 +2,28 @@
   <PageHeader :title="$t( 'Member List')">
     <Modal alignButtons="right" size="sm">
       <template #trigger="{ setIsOpen }">
-        <div v-for="items in craftableProUsers.data" :key="items">
-          <div v-for="item in items.roles" :key="item">
-            <Button style="background-color:darkorange;border-radius: 20px" v-if="item.pivot.model_id === user.id && (item.name ==='administrator'||item.name==='club_manager')" @click="() => setIsOpen(true)" :leftIcon="PlusIcon">
-              {{ $t("craftable-pro", "Invite user") }}
-            </Button>
-          </div> 
+        <div class=" flex items-center justify-end">
+          <div class=" mr-5">
+            <div v-for="infoUser in infoUsers">
+              <a v-if="infoUser.craftable_pro_users_id==user.id" style="background-color:darkorange;border-radius: 20px;padding:10px;color:white" 
+              :href="route('craftable-pro.info-users.edit',infoUser.id)">
+                Update Your Info
+              </a>
+            </div>
+          </div>
+          <div class=" mr-5">
+            <a style="background-color:darkorange;border-radius: 20px;padding:10px;color:white" 
+            :href="route('craftable-pro.info-users.create',user.id)">
+              Complete Your Info
+            </a>
+          </div>
+          <div v-for="items in craftableProUsers.data" :key="items">
+            <div v-for="item in items.roles" :key="item">
+              <Button style="background-color:darkorange;border-radius: 20px" v-if="item.pivot.model_id === user.id && (item.name ==='administrator'||item.name==='club_manager')" @click="() => setIsOpen(true)" :leftIcon="PlusIcon">
+                {{ $t("craftable-pro", "Invite user") }}
+              </Button>
+            </div> 
+          </div>
         </div>
       </template>
       <template #title>
@@ -54,146 +70,9 @@
       dataKey="craftableProUsers"
       :withBulkSelect="false"
     >
-      <template #actions>
-        <FiltersDropdown
-          :activeFiltersCount="activeFiltersCount"
-          :resetFilters="resetFilters"
-        >
-          <Multiselect
-            v-model="filtersForm.role"
-            name="role"
-            :label="$t('craftable-pro', 'Role')"
-            :options="filterOptions.roles"
-            optionsValueProp="id"
-            optionsLabel="name"
-          />
-          <Multiselect
-            v-model="filtersForm.status"
-            name="status"
-            :label="$t('craftable-pro', 'Status')"
-            :options="statusOptions"
-            options-value-prop="value"
-            options-label="label"
-            mode="single"
-          />
-          <Multiselect
-            v-model="filtersForm.two_factor_auth_enabled"
-            name="two_factor_auth_enabled"
-            :label="$t('craftable-pro', '2FA')"
-            :options="twoFactorAuthOptions"
-            options-value-prop="value"
-            options-label="label"
-            mode="single"
-          />
-        </FiltersDropdown>
-      </template>
-
-      <template #bulkActions="{ baseUrl, bulkAction }">
-        <!-- TODO: there was some kind of an idea to soft/force destroy? -->
-        <Button
-          @click="() => bulkAction('post', `${baseUrl}/bulk-activate`)"
-          color="gray"
-          variant="outline"
-          size="sm"
-          :leftIcon="ShieldCheckIcon"
-          v-can="'craftable-pro.craftable-pro-user.edit'"
-        >
-          {{ $t("craftable-pro", "Activate") }}
-        </Button>
-
-        <Modal type="danger" v-can="'craftable-pro.craftable-pro-user.destroy'">
-          <template #trigger="{ setIsOpen }">
-            <Button
-              @click="setIsOpen(true)"
-              color="gray"
-              variant="outline"
-              size="sm"
-              :leftIcon="NoSymbolIcon"
-            >
-              {{ $t("craftable-pro", "Deactivate") }}
-            </Button>
-          </template>
-
-          <template #title
-            >{{ $t("craftable-pro", "Deactivate users") }}
-          </template>
-
-          <template #content>
-            {{
-              $t(
-                "craftable-pro",
-                "Are you sure you want to deactivate selected users?"
-              )
-            }}
-          </template>
-
-          <template #buttons="{ setIsOpen }">
-            <Button
-              @click.prevent="
-                () => bulkAction('post', `${baseUrl}/bulk-deactivate`)
-              "
-              color="danger"
-            >
-              {{ $t("craftable-pro", "Deactivate") }}
-            </Button>
-            <Button
-              @click.prevent="() => setIsOpen()"
-              color="gray"
-              variant="outline"
-            >
-              {{ $t("craftable-pro", "Cancel") }}
-            </Button>
-          </template>
-        </Modal>
-
-        <Modal type="danger" v-can="'craftable-pro.craftable-pro-user.destroy'">
-          <template #trigger="{ setIsOpen }">
-            <Button
-              @click="() => setIsOpen(true)"
-              color="gray"
-              variant="outline"
-              size="sm"
-              :leftIcon="TrashIcon"
-            >
-              {{ $t("craftable-pro", "Delete") }}
-            </Button>
-          </template>
-
-          <template #title>{{ $t("craftable-pro", "Delete users") }} </template>
-          <template #content>
-            {{
-              $t(
-                "craftable-pro",
-                "Are you sure you want to delete selected users? All of their data will be permanently removed from our servers forever. This action cannot be undone."
-              )
-            }}
-          </template>
-
-          <template #buttons="{ setIsOpen }">
-            <!-- TODO: disable button while submitting... (done in other PR) -->
-            <Button
-              @click.prevent="
-                () => {
-                  bulkAction('delete', `${baseUrl}/bulk-destroy`, {
-                    onFinish: () => setIsOpen(false),
-                  });
-                }
-              "
-              color="danger"
-            >
-              {{ $t("craftable-pro", "Delete") }}
-            </Button>
-            <Button
-              @click.prevent="() => setIsOpen()"
-              color="gray"
-              variant="outline"
-            >
-              {{ $t("craftable-pro", "Cancel") }}
-            </Button>
-          </template>
-        </Modal>
-      </template>
-
+      
+      
+     
       <template #tableHead>
         <ListingHeaderCell  sortBy="id" class="w-1/12 text-center" style="color:black;font-weight: bold">
           {{ $t("No") }}
@@ -239,7 +118,11 @@
         </ListingHeaderCell>
 
       </template>
-
+      <!-- <div v-for="roles in craftableProUsers.data">
+        <div v-for="role in roles.roles">
+        
+        </div>
+      </div> -->
       <template #tableRow="{ item, action }: any">
         <ListingDataCell class=" w-1/12 text-center" style="color:black">
           {{ item.id }}
@@ -520,7 +403,6 @@
 </template>
 
 <script setup lang="ts">
-import { Link, usePage, useForm } from "@inertiajs/vue3";
 
 import {
   PlusIcon,
@@ -560,7 +442,7 @@ import {
   TextInput,
 } from "craftable-pro/Components";
 import { PaginatedCollection } from "craftable-pro/types/pagination";
-import type { CraftableProUser } from "craftable-pro/types/models";
+import type { CraftableProUser,Info } from "craftable-pro/types/models";
 import { useAction } from "craftable-pro/hooks/useAction";
 import { useListingFilters } from "craftable-pro/hooks/useListingFilters";
 import { PageProps } from "craftable-pro/types/page";
@@ -568,18 +450,21 @@ import { wTrans } from "craftable-pro/plugins/laravel-vue-i18n";
 import dayjs from "dayjs";
 import { CraftableProUserInviteUserForm } from "./types";
 import { useToast } from "@brackets/vue-toastification";
+import { Link, usePage, useForm } from "@inertiajs/vue3";
 import {Tooltip} from "../../Components";
 import { useUser } from "../../hooks/useUser";
 
 const { user } = useUser();
+
 
 interface Props {
   craftableProUsers: PaginatedCollection<CraftableProUser>;
   filterOptions: {
     roles: string[];
   };
+  infoUsers:PaginatedCollection<Info>;
 }
-
+const props = defineProps<Props>();
 const { action } = useAction();
 
 const changeActiveStatus = (item: CraftableProUser) => {
@@ -599,7 +484,6 @@ const twoFactorAuthOptions = [
   { value: "false", label: wTrans("craftable-pro", "Inactive") },
 ];
 
-const props = defineProps<Props>();
 
 const { filtersForm, resetFilters, activeFiltersCount } = useListingFilters(
   "/admin/craftable-pro-users",

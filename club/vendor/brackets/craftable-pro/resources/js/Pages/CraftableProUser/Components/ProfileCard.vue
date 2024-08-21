@@ -1,11 +1,11 @@
 <template>
-  <Card :title="$t('craftable-pro', 'Profile')">
-    <div class="grid grid-cols-6 gap-6">
+  <Card :title="$t('Your Profile')">
+    <div class="grid grid-cols-3 gap-6 m-auto w-6/12">
       <ImageUpload
         v-model="form.avatar"
         name="avatar"
         :label="$t('craftable-pro', 'User photo')"
-        class="col-span-6"
+        class="col-span-3"
       />
       <TextInput
         v-model="form.first_name"
@@ -27,7 +27,7 @@
         class="col-span-6 sm:col-span-3"
         disabled
       />
-      <Multiselect
+      <!-- <Multiselect
         v-model="form.locale"
         name="locale"
         :label="$t('craftable-pro', 'Locale')"
@@ -42,16 +42,18 @@
         <template #option="{ option, search }">
           <LocaleFlag :locale="option.value" />
         </template>
-      </Multiselect>
+      </Multiselect> -->
+      <div class="flex items-center justify-start col-span-3">
+        <Button
+          class="mt-5"
+          :leftIcon="ArrowDownTrayIcon"
+          @click="submit"
+          :loading="form.processing"
+        >
+          {{ $t("craftable-pro", "Save") }}
+        </Button>
+      </div>
     </div>
-    <Button
-      class="mt-5"
-      :leftIcon="ArrowDownTrayIcon"
-      @click="submit"
-      :loading="form.processing"
-    >
-      {{ $t("craftable-pro", "Save") }}
-    </Button>
   </Card>
 </template>
 

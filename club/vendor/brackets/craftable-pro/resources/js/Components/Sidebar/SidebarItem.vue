@@ -3,16 +3,16 @@
     :href="href"
     :class="[
       active
-        ? 'bg-primary-100 text-gray-900'
-        : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900',
-      'group/link flex items-center rounded-md px-2 py-2 text-base font-medium transition-colors',
+        ? 'bg-white text-orange-700'
+        : 'text-white hover:bg-gray-200 hover:text-gray-900',
+      'group/link flex items-center rounded-3xl px-2 py-2 text-base font-medium transition-colors',
     ]"
   >
     <component
       :is="icon"
       :class="[
         active
-          ? 'text-primary-500'
+          ? 'text-orange-700'
           : 'text-gray-400 group-hover/link:text-gray-500',
         'mr-3 h-6 w-6 flex-shrink-0 transition-colors',
       ]"

@@ -241,6 +241,8 @@ class CraftableProServiceProvider extends PackageServiceProvider
                         Route::get('craftable-pro-users/{craftableProUser}/impersonalLogin', [CraftableProUserController::class, 'impersonalLogin'])->name('craftable-pro-user.impersonalLogin');
                         Route::post('craftable-pro-users/invite-user', [CraftableProUserInvitationController::class, 'inviteUser'])->name('craftable-pro-user.invite-user');
 
+
+
                         // user profile
 
                         Route::get('profile', [MyProfileController::class, 'edit'])->name('craftable-pro-users.profile');

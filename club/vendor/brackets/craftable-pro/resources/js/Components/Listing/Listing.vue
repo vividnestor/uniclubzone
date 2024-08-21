@@ -103,7 +103,7 @@
       <div class="inline-block min-w-full align-middle">
         <div class="relative overflow-hidden md:overflow-visible">
           <EmptyListing v-if="!collection?.length" />
-          <table v-else class="divide-gray-200 min-w-full divide-y">
+          <table class="divide-gray-200 min-w-full divide-y">
             <thead class="bg-gray-50">
               <tr>
                 <ListingHeaderCell v-if="withBulkSelect" class="w-8 sm:w-14" />
@@ -218,7 +218,7 @@ if (props.dataKey) {
 
 const slots = useSlots();
 
-const collection = computed(() => props.data.data);
+const collection = computed(() => props.data.data); 
 
 const pagination = computed(() => props.data);
 

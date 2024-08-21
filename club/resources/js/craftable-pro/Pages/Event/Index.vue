@@ -1,5 +1,5 @@
 <template>
-  <PageHeader :title="$t('craftable-pro', 'Events')">
+  <PageHeader :title="$t('Events of Club')">
     <Button style="background-color:darkorange;border-radius: 20px"
       :leftIcon="PlusIcon"
       :as="Link"

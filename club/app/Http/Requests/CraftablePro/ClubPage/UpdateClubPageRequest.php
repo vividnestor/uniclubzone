@@ -26,10 +26,6 @@ class UpdateClubPageRequest extends FormRequest
         return [
             'title' => ['sometimes','string'],
             'content' => ['sometimes'],
-            'slug' => ['sometimes','string'],
-            'published_at' => ['nullable'],
-            'craftable_pro_users_id' => ['sometimes'],
-            'club_id' => ['sometimes'],
         ];
     }
 }

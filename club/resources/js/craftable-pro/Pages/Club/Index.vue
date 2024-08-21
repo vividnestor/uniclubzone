@@ -55,7 +55,7 @@
         <ListingDataCell class="w-1/8 text-center">
             <!-- <ListingToggle name="active" v-model="item.active" :updateUrl="route('craftable-pro.clubs.update', item.id)" />  -->
             <p class=" bg-green-700 p-1 rounded-2xl text-white text-center font-bold" v-if="item.active===true">Active</p>
-            <p class=" bg-yellow-500 p-1 rounded-2xl text-white text-center font-bold"  v-else="item.active===false">Die</p>
+            <p class=" bg-yellow-500 p-1 rounded-2xl text-white text-center font-bold"  v-else="item.active===false">Idle</p>
         </ListingDataCell> 
         
         

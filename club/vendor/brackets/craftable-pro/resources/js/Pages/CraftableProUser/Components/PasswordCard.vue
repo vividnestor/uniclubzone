@@ -1,6 +1,6 @@
 <template>
   <Card :title="title">
-    <div class="grid grid-cols-6 gap-6">
+    <div class="grid grid-cols-3 gap-6 m-auto w-6/12">
       <slot></slot>
       <TextInput
         v-model="form.password"

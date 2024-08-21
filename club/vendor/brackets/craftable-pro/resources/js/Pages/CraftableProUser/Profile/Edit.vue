@@ -5,11 +5,11 @@
   <PageContent>
     <template #tabs>
       <TabGroup variant="underline" >
-        <Tab>
+        <Tab class="w-full text-center">
           {{ $t("craftable-pro", "Profile") }}
         </Tab>
-        <Tab>
-          <div class="flex items-center gap-3">
+        <Tab class="w-full text-center">
+          <div class="flex items-center gap-3 justify-center">
             {{ $t("craftable-pro", "Security") }}
           </div>
         </Tab>

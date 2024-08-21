@@ -26,10 +26,6 @@ class StoreClubPageRequest extends FormRequest
         return [
             'title' => ['required','string'],
             'content' => ['required'],
-            'slug' => ['required','string'],
-            'published_at' => ['nullable'],
-            'craftable_pro_users_id' => ['required'],
-            'club_id' => ['required'],
         ];
     }
 }

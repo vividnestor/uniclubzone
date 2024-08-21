@@ -1,4 +1,14 @@
-<template> 
+<template>
+  <!-- {{ Info }} -->
+  <!-- {{ allUsers }} -->
+  <!-- {{ userId }} -->
+  <!-- <div v-if="userInfo.craftable_pro_users_id==user.id">
+    Hello
+  </div>
+  <div v-else>
+    hi
+  </div> -->
+  
   <div class="flex h-screen overflow-hidden"> 
     <!-- Sidebar --> 
     <TransitionRoot as="template" :show="sidebarOpen"> 
@@ -49,7 +59,7 @@
                 </button> 
               </div> 
             </TransitionChild> 
-            <Sidebar class="relative h-full w-full" /> 
+            <Sidebar class="relative h-full w-full" style="background-color: black;"/> 
           </div> 
         </TransitionChild> 
         <div class="w-14 flex-shrink-0"> 
@@ -57,26 +67,26 @@
         </div> 
       </Dialog> 
     </TransitionRoot> 
- 
+  
     <!-- Main content --> 
     <div class="flex flex-col flex-1 overflow-hidden"> 
-      <!-- Navbar --> 
-      <div class="relative flex-shrink-0 flex h-16 bg-white border-b border-gray-200 z-10"> 
+      <!-- Navbar -->
+      <div class="h-20 relative flex-shrink-0 flex bg-white border-b border-gray-200 z-10"> 
         <button 
           type="button" 
-          class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600" 
+          class="px-5 h-20  border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600" 
           @click="sidebarOpen = true" 
         > 
           <span class="sr-only">Open sidebar</span> 
           <Bars3Icon class="h-6 w-6" aria-hidden="true" /> 
         </button> 
-        <div class="flex-1 flex justify-between px-4"> 
-          <div class="flex-1 flex"> 
+        <div class=" w-full flex items-center justify-between px-4"> 
+          <div class=" w-2/9 flex"> 
             <div class="flex-shrink-0 flex items-center"> 
               <Logo /> 
             </div> 
-          </div> 
-          <div class="flex flex-shrink-0 border-t border-gray-200 bg-gray-100 px-3 py-4 sm:p-4 rounded-full mt-1 mb-1"> 
+          </div>
+          <div class="flex h-14 w-2/9 flex-shrink-0 border-t border-gray-200 bg-gray-100 sm:p-4 rounded-full"> 
             <!-- profile user  --> 
             <div class="flex w-full items-center"> 
               <Avatar 
@@ -108,9 +118,9 @@
         </slot> 
       </main> 
     </div> 
-  </div> 
- 
+  </div>
   <TwoFactorAuthenticationNoticeModal :open="twoFactorAuthenticationNoticeModalOpened" @toggle-open="twoFactorAuthenticationNoticeModalOpened = !twoFactorAuthenticationNoticeModalOpened" /> 
+ 
 </template> 
  
 <script setup lang="ts"> 
@@ -124,8 +134,26 @@ import TwoFactorAuthenticationNoticeModal from "craftable-pro/Pages/Auth/TwoFact
 import { useUser } from "../hooks/useUser"; 
 // import { UserDropdown, Avatar } from "@/index"; 
 import { Avatar, UserDropdown } from "craftable-pro/Components"; 
+import { PaginatedCollection } from "craftable-pro/types/pagination";
+import type { InfoUser } from "./types";
+import { all } from "axios";
+
+interface Props {
+  infoUsers: InfoUser;
+}
+const props = defineProps<Props>();
+// const Info = props.infoUsers[0];
+const { user } = useUser();
+
+// const allUsers=[];
+// props.infoUsers.forEach(users => {
+//   allUsers.push(users.id);
+// });
+// console.log(allUsers);
+
+
+
  
-const { user } = useUser(); 
 const sidebarOpen = ref(false); 
 const twoFactorAuthenticationNoticeModalOpened = ref<boolean>(false); 
  
