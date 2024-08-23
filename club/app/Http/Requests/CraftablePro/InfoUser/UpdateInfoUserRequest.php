@@ -24,6 +24,7 @@ class UpdateInfoUserRequest extends FormRequest
     public function rules()
     {
         return [
+            'username' => ['sometimes','string'],
             'gender' => ['sometimes','string'],
             'department' => ['sometimes','string'],
             'year' => ['sometimes','string'],

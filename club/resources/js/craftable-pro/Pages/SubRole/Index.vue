@@ -1,21 +1,21 @@
 <template>
-  <PageHeader :title="$t('craftable-pro', 'Info Users')">
+  <PageHeader :title="$t('craftable-pro', 'Sub Roles')">
     <Button style="background-color:darkorange;border-radius: 20px"
       :leftIcon="PlusIcon"
       :as="Link"
-      :href="route('craftable-pro.info-users.create')"
-      v-can="'craftable-pro.info-user.create'"
+      :href="route('craftable-pro.sub-roles.create')"
+      v-can="'craftable-pro.sub-role.create'"
     >
-      {{ $t("craftable-pro", "New Info User") }}
+      {{ $t("craftable-pro", "New Sub Role") }}
     </Button>
     
   </PageHeader>
 
   <PageContent>
     <Listing
-      :baseUrl="route('craftable-pro.info-users.index')"
-      :data="infoUsers"
-      dataKey="infoUsers"
+      :baseUrl="route('craftable-pro.sub-roles.index')"
+      :data="subRoles"
+      dataKey="subRoles"
     >
       <template #bulkActions="{ bulkAction }">
         <Modal type="danger">
@@ -26,20 +26,20 @@
               variant="outline"
               size="sm"
               :leftIcon="TrashIcon"
-              v-can="'craftable-pro.info-user.destroy'"
+              v-can="'craftable-pro.sub-role.destroy'"
             >
               {{ $t("craftable-pro", "Delete") }}
             </Button>
           </template>
 
           <template #title>
-            {{ $t("craftable-pro", "Delete Info User") }}
+            {{ $t("craftable-pro", "Delete Sub Role") }}
           </template>
           <template #content>
             {{
               $t(
                 "craftable-pro",
-                "Are you sure you want to delete selected Info User? All data will be permanently removed from our servers forever. This action cannot be undone."
+                "Are you sure you want to delete selected Sub Role? All data will be permanently removed from our servers forever. This action cannot be undone."
               )
             }}
           </template>
@@ -48,13 +48,13 @@
             <Button
               @click.prevent="
                 () => {
-                  bulkAction('post', route('craftable-pro.info-users.bulk-destroy'), {
+                  bulkAction('post', route('craftable-pro.sub-roles.bulk-destroy'), {
                     onFinish: () => setIsOpen(false),
                   });
                 }
               "
               color="danger"
-              v-can="'craftable-pro.info-user.destroy'"
+              v-can="'craftable-pro.sub-role.destroy'"
             >
               {{ $t("craftable-pro", "Delete") }}
             </Button>
@@ -73,23 +73,8 @@
         <ListingHeaderCell sortBy="id">
             {{ $t("craftable-pro", "Id") }}
         </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="username">
-            {{ $t("craftable-pro", "Username") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="gender">
-            {{ $t("craftable-pro", "Gender") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="department">
-            {{ $t("craftable-pro", "Department") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="year">
-            {{ $t("craftable-pro", "Year") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="phone">
-            {{ $t("craftable-pro", "Phone") }}
-        </ListingHeaderCell> 
-        <ListingHeaderCell sortBy="craftable_pro_users_id">
-            {{ $t("craftable-pro", "Craftable Pro Users Id") }}
+        <ListingHeaderCell sortBy="name">
+            {{ $t("craftable-pro", "Name") }}
         </ListingHeaderCell>
         <ListingHeaderCell>
           <span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span>
@@ -101,32 +86,17 @@
              {{ item.id }}
         </ListingDataCell> 
         <ListingDataCell>
-             {{ item.username }}
-        </ListingDataCell> 
-        <ListingDataCell>
-             {{ item.gender }}
-        </ListingDataCell> 
-        <ListingDataCell>
-             {{ item.department }}
-        </ListingDataCell> 
-        <ListingDataCell>
-             {{ item.year }}
-        </ListingDataCell> 
-        <ListingDataCell>
-             {{ item.phone }}
-        </ListingDataCell> 
-        <ListingDataCell>
-             {{ item.craftable_pro_users_id }}
+             {{ item.name }}
         </ListingDataCell>
         <ListingDataCell>
           <div class="flex items-center justify-end gap-3">
             <IconButton
               :as="Link"
-              :href="route('craftable-pro.info-users.edit', item)"
+              :href="route('craftable-pro.sub-roles.edit', item)"
               variant="ghost"
               color="gray"
               :icon="PencilSquareIcon"
-              v-can="'craftable-pro.info-user.edit'"
+              v-can="'craftable-pro.sub-role.edit'"
             />
 
             <Modal type="danger">
@@ -136,18 +106,18 @@
                   color="gray"
                   variant="ghost"
                   :icon="TrashIcon"
-                  v-can="'craftable-pro.info-user.destroy'"
+                  v-can="'craftable-pro.sub-role.destroy'"
                 />
               </template>
 
               <template #title>
-                {{ $t("craftable-pro", "Delete Info User") }}
+                {{ $t("craftable-pro", "Delete Sub Role") }}
               </template>
               <template #content>
                 {{
                   $t(
                     "craftable-pro",
-                    "Are you sure you want to delete selected Info User? All data will be permanently removed from our servers forever. This action cannot be undone."
+                    "Are you sure you want to delete selected Sub Role? All data will be permanently removed from our servers forever. This action cannot be undone."
                   )
                 }}
               </template>
@@ -156,13 +126,13 @@
                 <Button
                   @click.prevent="
                     () => {
-                      action('delete', route('craftable-pro.info-users.destroy', item), {
+                      action('delete', route('craftable-pro.sub-roles.destroy', item), {
                         onFinish: () => setIsOpen(false),
                       });
                     }
                   "
                   color="danger"
-                  v-can="'craftable-pro.info-user.destroy'"
+                  v-can="'craftable-pro.sub-role.destroy'"
                 >
                   {{ $t("craftable-pro", "Delete") }}
                 </Button>
@@ -206,7 +176,7 @@ import {
     ListingToggle,
 } from "craftable-pro/Components";
 import { PaginatedCollection } from "craftable-pro/types/pagination";
-import type { InfoUser } from "./types";
+import type { SubRole } from "./types";
 import type { PageProps } from "craftable-pro/types/page";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -216,7 +186,7 @@ dayjs.extend(customParseFormat)
 
 
 interface Props {
-  infoUsers: PaginatedCollection<InfoUser>;
+  subRoles: PaginatedCollection<SubRole>;
 }
 defineProps<Props>();
 

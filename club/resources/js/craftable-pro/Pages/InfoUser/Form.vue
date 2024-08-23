@@ -6,6 +6,13 @@
       <Card>
         <div class="space-y-4">
             <TextInput
+                v-model="form.username"
+                name="username"
+                :label="$t('craftable-pro', 'Username')"
+                
+            /> 
+
+            <TextInput
                 v-model="form.gender"
                 name="gender"
                 :label="$t('craftable-pro', 'Gender')"
@@ -34,11 +41,10 @@
             /> 
 
             <TextInput
-                class=" hidden"
                 v-model="form.craftable_pro_users_id"
                 name="craftable_pro_users_id"
                 :label="$t('craftable-pro', 'Craftable Pro Users Id')"
-                
+                class=" hidden"
             /></div>
       </Card>
     </div>
@@ -62,16 +68,14 @@ import {
 } from "craftable-pro/Components";
 import { InertiaForm } from "craftable-pro/types";
 import type { InfoUserForm } from "./types";
-import { useUser } from "craftable-pro/hooks/useUser";
-import { values } from "lodash";
-const {user}=useUser();
+
+
 
 interface Props {
   form: InertiaForm<InfoUserForm>;
   submit: void;
   
 }
-
 
 const props = defineProps<Props>();
 

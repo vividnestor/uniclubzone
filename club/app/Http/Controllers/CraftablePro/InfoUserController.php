@@ -36,18 +36,18 @@ class InfoUserController extends Controller
         $infoUsersQuery = QueryBuilder::for(InfoUser::class)
             ->allowedFilters([
                 AllowedFilter::custom('search', new FuzzyFilter(
-                    'id','gender','department','year','phone','craftable_pro_users_id'
+                    'id','username','gender','department','year','phone','craftable_pro_users_id'
                 )),
             ])
             ->defaultSort($defaultSort)
-            ->allowedSorts('id','gender','department','year','phone','craftable_pro_users_id');
+            ->allowedSorts('id','username','gender','department','year','phone','craftable_pro_users_id');
 
         if ($request->wantsJson() && $request->get('bulk_select_all')) {
             return response()->json($infoUsersQuery->select(['id'])->pluck('id'));
         }
 
         $infoUsers = $infoUsersQuery
-            ->select('id','gender','department','year','phone','craftable_pro_users_id')
+            ->select('id','username','gender','department','year','phone','craftable_pro_users_id')
             ->paginate($request->get('per_page'))->withQueryString();
 
         Session::put('infoUsers_url', $request->fullUrl());
@@ -60,10 +60,9 @@ class InfoUserController extends Controller
      * Show the form for creating a new resource.
      */
     public function create(CreateInfoUserRequest $request): Response
-    {
-        $infoUsers = DB::table('info_users')->get();
+    {   
         return Inertia::render('InfoUser/Create', [
-            'infoUsers' => $infoUsers,
+
         ]);
     }
 

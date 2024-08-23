@@ -60,6 +60,7 @@ class HomeController extends Controller
         $infoUsers = DB::table('info_users')->get();
         $userStatus= DB::table('craftable_pro_users')->get();
         // dd($userStatus);
+        $UserClub=DB::table('role_club')->get();
         return Inertia::render('Home', [
             'craftableProUsers' => $craftableProUsers,
             'filterOptions' => [
@@ -69,7 +70,8 @@ class HomeController extends Controller
             'role'=>$role,
             'media'=>$media,
             'infoUsers'=>$infoUsers,
-            'userStatus'=>$userStatus
+            'userStatus'=>$userStatus,
+            'UserClub'=>$UserClub
         ]);
     }
 }

@@ -157,3 +157,39 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::delete('info-users/{infoUser}', [App\Http\Controllers\CraftablePro\InfoUserController::class, 'destroy'])->name('info-users.destroy');
     Route::post('info-users/bulk-destroy', [App\Http\Controllers\CraftablePro\InfoUserController::class, 'bulkDestroy'])->name('info-users.bulk-destroy');
 });
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('role-clubs', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'index'])->name('role-clubs.index');
+    Route::get('role-clubs/create', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'create'])->name('role-clubs.create');
+    Route::post('role-clubs', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'store'])->name('role-clubs.store');
+    Route::get('role-clubs/edit/{roleClub}', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'edit'])->name('role-clubs.edit');
+    Route::match(['put', 'patch'], 'role-clubs/{roleClub}', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'update'])->name('role-clubs.update');
+    Route::delete('role-clubs/{roleClub}', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'destroy'])->name('role-clubs.destroy');
+    Route::post('role-clubs/bulk-destroy', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'bulkDestroy'])->name('role-clubs.bulk-destroy');
+});
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('sub-clubs', [App\Http\Controllers\CraftablePro\SubClubController::class, 'index'])->name('sub-clubs.index');
+    Route::get('sub-clubs/create', [App\Http\Controllers\CraftablePro\SubClubController::class, 'create'])->name('sub-clubs.create');
+    Route::post('sub-clubs', [App\Http\Controllers\CraftablePro\SubClubController::class, 'store'])->name('sub-clubs.store');
+    Route::get('sub-clubs/edit/{subClub}', [App\Http\Controllers\CraftablePro\SubClubController::class, 'edit'])->name('sub-clubs.edit');
+    Route::match(['put', 'patch'], 'sub-clubs/{subClub}', [App\Http\Controllers\CraftablePro\SubClubController::class, 'update'])->name('sub-clubs.update');
+    Route::delete('sub-clubs/{subClub}', [App\Http\Controllers\CraftablePro\SubClubController::class, 'destroy'])->name('sub-clubs.destroy');
+    Route::post('sub-clubs/bulk-destroy', [App\Http\Controllers\CraftablePro\SubClubController::class, 'bulkDestroy'])->name('sub-clubs.bulk-destroy');
+});
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('sub-roles', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'index'])->name('sub-roles.index');
+    Route::get('sub-roles/create', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'create'])->name('sub-roles.create');
+    Route::post('sub-roles', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'store'])->name('sub-roles.store');
+    Route::get('sub-roles/edit/{subRole}', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'edit'])->name('sub-roles.edit');
+    Route::match(['put', 'patch'], 'sub-roles/{subRole}', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'update'])->name('sub-roles.update');
+    Route::delete('sub-roles/{subRole}', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'destroy'])->name('sub-roles.destroy');
+    Route::post('sub-roles/bulk-destroy', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'bulkDestroy'])->name('sub-roles.bulk-destroy');
+});

@@ -19,25 +19,33 @@
         >
           {{ $t("Participation History") }}
         </SidebarItem>
-        <SidebarItem
+        <!-- <SidebarItem
           :href="route('craftable-pro.applications.index')"
           :icon="CubeTransparentIcon"
         >
           {{ $t("Applications") }}
-        </SidebarItem>
-        <SidebarItem
-          :href="route('craftable-pro.media.index')"
-          :icon="PhotoIcon"
-          v-can="'craftable-pro.media.index'"
-        >
-          {{ $t("craftable-pro", "Media") }}
-        </SidebarItem>
+        </SidebarItem> -->
         <SidebarItem
           :href="route('craftable-pro.clubs.index')"
           :icon="CubeTransparentIcon"
             v-can="'craftable-pro.club.index'"
         >
           {{ $t("craftable-pro", "Clubs") }}
+        </SidebarItem>
+        <SidebarItem
+          :href="route('craftable-pro.role-clubs.index')"
+          :icon="CubeTransparentIcon"
+          v-can="'craftable-pro.role-club.index'"
+        >
+          {{ 'User Club' }}
+        </SidebarItem>
+        <SidebarItem
+          :href="route('craftable-pro.sub-roles.index')"
+          :icon="CubeTransparentIcon"
+          v-can="'craftable-pro.sub-role.index'"
+
+        >
+          {{ 'Role Club' }}
         </SidebarItem>
         <SidebarItem
           :href="route('craftable-pro.events.index')"
@@ -80,6 +88,13 @@
           v-can="'craftable-pro.settings.edit'"
         >
           {{ $t("craftable-pro", "Settings") }}
+        </SidebarItem>
+        <SidebarItem
+          :href="route('craftable-pro.media.index')"
+          :icon="PhotoIcon"
+          v-can="'craftable-pro.media.index'"
+        >
+          {{ $t("craftable-pro", "Media") }}
         </SidebarItem>
         
     </nav>

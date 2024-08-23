@@ -64,29 +64,39 @@
                     <p class=" w-2/12">Status</p>
                 </div>
                 <hr>
-                <div v-for="clubs in club">
+                {{ UserClub }}
+                {{ infoUsers }}
+                <div v-for="SubRoles in SubRole">
+                    <div v-for="UserClubs in UserClub">
+                        <div v-for="clubs in club">
+                            <div v-if="clubs.craftable_pro_users_id==user.id && UserClubs.sub_role_id===SubRoles.id && clubs.craftable_pro_users_id==UserClubs.club_id">
+                                {{ clubs.name }}
+                            </div>
+                        </div>         
+                    </div>
+                </div>
+                <!-- <div class=" flex items-center w-full justify-around mb-2 pt-2 pb-2 text-center">
+                    <p class=" w-1/12">{{ clubs.id }}</p>
+                    <p class=" w-4/12">{{clubs.name}}</p>
+                    <p class=" w-2/12">{{ SubRoles.name }}</p>
+                    <p class=" w-2/12">2023</p>
+                    <div v-if="clubs.active===1" class=" w-2/12 flex items-center justify-center">
+                        <p class=" w-20 bg-green-700 text-white rounded-2xl">Active</p>
+                    </div>
+                    <div v-else class=" w-2/12 flex items-center justify-center">
+                        <p class=" w-20 bg-yellow-700 text-white rounded-2xl">Idle</p>
+                    </div>
+                </div> -->
+                <!-- <div v-for="clubs in club">
                     <div v-if="clubs.craftable_pro_users_id===user.id">
                         <div v-for="items in craftableProUsers.data">
                             <div v-for="item in items.roles">
-                                <div v-if="item.pivot.model_id===user.id && (item.name!==('club_manager') && item.name!==('club_admin') && item.name!==('administrator'))">
-                                    <div class=" flex items-center w-full justify-around mb-2 pt-2 pb-2 text-center">
-                                        <p class=" w-1/12">{{ clubs.id }}</p>
-                                        <p class=" w-4/12">{{clubs.name}}</p>
-                                        <p v-if="item.name==='student'" class=" w-2/12">member</p>
-                                        <p v-else class=" w-2/12">{{ item.name }}</p>
-                                        <p class=" w-2/12">2023</p>
-                                        <div v-if="clubs.active===1" class=" w-2/12 flex items-center justify-center">
-                                            <p class=" w-20 bg-green-700 text-white rounded-2xl">Active</p>
-                                        </div>
-                                        <div v-else class=" w-2/12 flex items-center justify-center">
-                                            <p class=" w-20 bg-yellow-700 text-white rounded-2xl">Idle</p>
-                                        </div>
-                                    </div>
+                                <div v-if="item.pivot.model_id===user.id && (item.name!==('club_admin') && item.name!==('administrator'))">
                                 </div>
                             </div> 
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -108,6 +118,8 @@ interface Props {
   club:PaginatedCollection<Club>;
   media: PaginatedCollection<Club>;
   infoUsers:PaginatedCollection<Info>
+  UserClub:PaginatedCollection<Info>
+  SubRole:PaginatedCollection<Info>
 
 }
 defineProps<Props>();

@@ -47,6 +47,9 @@ class ParticipationHistory extends Controller
         $media = DB::table('media')->where('model_type', 'Brackets\CraftablePro\Models\CraftableProUser')->get();
         // dd($media);
         $infoUsers = DB::table('info_users')->get();
+        $UserClub = DB::table('role_club')->get();
+        $SubRole = DB::table('sub_role')->get();
+        // dd($SubRole);
         return Inertia::render('ParticipationHistory/Index', [
             'craftableProUsers' => $craftableProUsers,
             'filterOptions' => [
@@ -54,7 +57,9 @@ class ParticipationHistory extends Controller
             ],
             'club' => $club,
             'media'=> $media,
-            'infoUsers'=>$infoUsers
+            'infoUsers'=>$infoUsers,
+            'UserClub'=>$UserClub,
+            'SubRole'=>$SubRole
         ]);
     }
 }

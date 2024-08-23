@@ -9,7 +9,7 @@ class InfoUser extends Model {
 
 
     protected $table = 'info_users';
-    protected $fillable = ['gender', 'department', 'year', 'phone', 'craftable_pro_users_id'];
+    protected $fillable = ['username', 'gender', 'department', 'year', 'phone', 'craftable_pro_users_id'];
 
 
 protected $casts = [

@@ -102,7 +102,7 @@ import { PaginatedCollection } from "craftable-pro/types/pagination";
 import type { CraftableProUser ,Info,Role} from "craftable-pro/types/models";
 import { useUser } from "craftable-pro/hooks/useUser";
 import Chart from 'primevue/chart';
-import type { User,Club } from "./types";
+import type { User,Club,UserClub } from "./types";
 
 
 import { ref,onMounted } from 'vue';
@@ -119,6 +119,7 @@ interface Props {
   media:PaginatedCollection<Role>;
   infoUsers:PaginatedCollection<Info>
   userStatus:User;
+  UserClub:UserClub;
 }
 
 
@@ -129,7 +130,6 @@ const countClub=[];
     countClub.push(count.name);
 });
 const clubCount = countClub.filter(count => count ).length;
-console.log(countClub)
 
 const Users=[];
 props.userStatus.forEach(userstatus => {
@@ -143,6 +143,11 @@ const newData = Users.map(value => {
   return 'die';
 }
 });
+const userClub=[];
+props.UserClub.forEach(userclub=>{
+  userClub.push(userclub.club_id)
+})
+console.log(userClub);
 
 const activeCount = newData.filter(status => status === 'active').length;
 const dieCount = newData.filter(status => status === 'die').length;

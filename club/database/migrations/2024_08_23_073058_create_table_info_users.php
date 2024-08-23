@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('info_users', function (Blueprint $table) {
             $table->id();
+            $table->string('username');
             $table->string('gender');
             $table->string('department');
             $table->string('year');
