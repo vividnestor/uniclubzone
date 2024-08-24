@@ -47,6 +47,9 @@ class ClubStudentController extends Controller
         // dd($club);
         $media = DB::table('media')->where('model_type', 'App\Models\Club')->get();
         // dd($club);
+        $infoUsers = DB::table('info_users')->get();
+        $UserClub = DB::table('role_club')->get();
+        $SubRole = DB::table('sub_role')->get();
         return Inertia::render('ClubStudent/Index', [
             'craftableProUsers' => $craftableProUsers,
             'filterOptions' => [
@@ -54,6 +57,9 @@ class ClubStudentController extends Controller
             ],
             'club' => $club,
             'media'=> $media,
+            'infoUsers'=>$infoUsers,
+            'UserClub'=>$UserClub,
+            'SubRole'=>$SubRole
         ]);
     }
 }
