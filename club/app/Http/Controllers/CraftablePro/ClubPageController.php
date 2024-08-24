@@ -36,18 +36,18 @@ class ClubPageController extends Controller
         $clubPagesQuery = QueryBuilder::for(ClubPage::class)
             ->allowedFilters([
                 AllowedFilter::custom('search', new FuzzyFilter(
-                    'id','title','content','slug','published_at','craftable_pro_users_id','club_id'
+                    'id','title','content'
                 )),
             ])
             ->defaultSort($defaultSort)
-            ->allowedSorts('id','title','content','slug','published_at','craftable_pro_users_id','club_id');
+            ->allowedSorts('id','title','content');
 
         if ($request->wantsJson() && $request->get('bulk_select_all')) {
             return response()->json($clubPagesQuery->select(['id'])->pluck('id'));
         }
 
         $clubPages = $clubPagesQuery
-            ->select('id','title','content','slug','published_at','craftable_pro_users_id','club_id')
+            ->select('id','title','content')
             ->paginate($request->get('per_page'))->withQueryString();
 
         Session::put('clubPages_url', $request->fullUrl());
@@ -82,6 +82,8 @@ class ClubPageController extends Controller
      */
     public function edit(EditClubPageRequest $request, ClubPage $clubPage): Response
     {
+        $clubPage->load('media');
+
         return Inertia::render('ClubPage/Edit', [
             'clubPage' => $clubPage,
             

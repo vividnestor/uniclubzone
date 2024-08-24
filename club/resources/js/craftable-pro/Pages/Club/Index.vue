@@ -42,7 +42,7 @@
         </ListingHeaderCell>
       </template>
       <template style="" #tableRow="{ item, action }: any">
-        
+        {{  }}
         <ListingDataCell class=" w-1/8 text-center" style="color:black">
              0{{ item.id }}
         </ListingDataCell> 
@@ -52,12 +52,11 @@
         <ListingDataCell class=" w-2/8 text-center" style="color:black">
              {{ item.craftable_pro_user.email }}
         </ListingDataCell> 
-        <ListingDataCell class="w-1/8 text-center">
+        <ListingDataCell class="w-1/8 flex items-center justify-center">
             <!-- <ListingToggle name="active" v-model="item.active" :updateUrl="route('craftable-pro.clubs.update', item.id)" />  -->
-            <p class=" bg-green-700 p-1 rounded-2xl text-white text-center font-bold" v-if="item.active===true">Active</p>
-            <p class=" bg-yellow-500 p-1 rounded-2xl text-white text-center font-bold"  v-else="item.active===false">Die</p>
+            <p class=" bg-green-700 pt-2 pb-2 w-1/2 rounded-2xl text-white text-center font-bold" v-if="item.active===true">Active</p>
+            <p class=" bg-yellow-500 pt-2 pb-2 w-1/2 rounded-2xl text-white text-center font-bold"  v-else="item.active===false">Idle</p>
         </ListingDataCell> 
-        
         
         <ListingDataCell class=" w-2/8 text-center">
           <div class="flex items-center justify-center w-full">
@@ -118,6 +117,8 @@
             </Modal>
           </div>
         </ListingDataCell>
+        <template v-if="item.craftable_pro_users_id==user.id">
+        </template>
       </template>
     </Listing>
   </PageContent>
@@ -151,7 +152,9 @@ import type { Club } from "./types";
 import type { PageProps } from "craftable-pro/types/page";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { useUser } from "craftable-pro/hooks/useUser";
 
+const {user}=useUser();
 dayjs.extend(customParseFormat)
 
 

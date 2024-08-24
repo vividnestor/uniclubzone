@@ -52,3 +52,10 @@ export type Role = ModelWithTimestamps & {
   two_factor_auth_required: boolean;
   guard_name: string;
 };
+export type Info = ModelWithTimestamps & {
+  id: number;
+  gender: string;
+  department: string;
+  year: string;
+  craftable_pro_users_id: string;
+};

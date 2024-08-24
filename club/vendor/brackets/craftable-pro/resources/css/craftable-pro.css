@@ -34,3 +34,9 @@
         0 0/calc(100% - var(--s)) calc(100% - var(--s)),
         linear-gradient(#000 0 0) content-box;
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.ative{
+    color: blue;
+}

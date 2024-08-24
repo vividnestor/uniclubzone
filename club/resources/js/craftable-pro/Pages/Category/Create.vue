@@ -32,7 +32,7 @@ const props = defineProps<Props>();
 const { form, submit } = useForm<CategoryForm>(
     {
           name: "", 
-description: ""
+description: "",
     },
     route("craftable-pro.categories.store"),
     "post"

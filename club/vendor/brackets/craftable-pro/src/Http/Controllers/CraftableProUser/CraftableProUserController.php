@@ -79,14 +79,16 @@ class CraftableProUserController extends Controller
             ->select(['id', 'first_name', 'last_name', 'email', 'email_verified_at', 'active', 'last_active_at', 'two_factor_secret', 'two_factor_confirmed_at'])
             ->paginate(request()->get('per_page'))
             ->withQueryString();
-
+        
         $roles = Role::all();
-
+        $infoUsers = DB::table('info_users')->get();
+        // dd($infoUsers);
         return Inertia::render('CraftableProUser/Index', [
             'craftableProUsers' => $craftableProUsers,
             'filterOptions' => [
                 'roles' => $roles->map->only(['id', 'name']),
             ],
+            'infoUsers'=>$infoUsers
         ]);
     }
 

@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class=" m-auto">
     <label
       v-if="label"
       :for="name"
-      class="text-blue-gray-900 mb-1 block text-sm font-medium"
+      class="text-blue-gray-900 mb-1 w-full text-center block text-sm font-medium"
     >
-      {{ label }}</label
-    >
-    <div class="flex items-center gap-4">
+      {{ label }}
+    </label>
+    <div class="block gap-4">
       <label
         :for="name"
         class="text-blue-gray-900 relative cursor-pointer text-sm font-medium"
@@ -16,6 +16,7 @@
         @drop.prevent="onFilesDrop"
       >
         <Avatar
+          class=" m-auto w-44 h-44"
           size="xl"
           :src="filteredFiles?.[0]?.preview_url ?? filteredFiles?.[0]?.base64"
         />

@@ -16,7 +16,7 @@
                 :label="$t('craftable-pro', 'Slug')"
                 
             />
-            <Wysiwyg
+            <TextArea
                 v-model="form.content"
                 name="content"
                 :label="$t('craftable-pro', 'Content')"

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->boolean('delete_flag')->default('0');
 
             $table->dateTime('published_at')->nullable();
-            $table->foreignId('craftable_pro_users_id')->constrained('craftable_pro_users');
 
             $table->timestamps();
         });

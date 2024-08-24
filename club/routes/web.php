@@ -13,44 +13,90 @@ use App\Http\Controllers\GoogleLoginController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+// welcome page
 Route::get('/', function () {
-    return view('welcome');
+    $club=DB::table('club')->get();
+    $media=DB::table('media')->where('model_type', 'App\Models\Club')->get(); 
+    return view('welcome',[
+        'club'=>$club,
+        'media'=>$media,
+
+    ]);
 });
-Route::get('Club/', function () {
-    return view('Club/index');
+// club detail index
+Route::get('Club.index/{club}', function ($club) {
+    $data=DB::table('club')->where('id',$club)->first();
+    $img=DB::table('media')->where('model_id',$club)->first();
+    $event=DB::table('event')->where('club_id',$club)->get();
+    // image each event
+    // dd($data);
+    $imgevent=DB::table('media')->where('model_type', 'App\Models\Event')->get();
+    return view('Club.index',compact('data','img','imgevent'),['event'=>$event]);
 });
-Route::get('Club/aboutClub', function () {
-    return view('Club/aboutClub');
-});
-Route::get('Club/organizationalChart', function () {
-    return view('Club/organizationalChart');
-});
-Route::get('Club/membership', function () {
-    return view('Club/membership');
-});
-Route::get('Club/batches', function () {
-    return view('Club/batches');
+// about club
+Route::get('Club.aboutClub/{club}', function ($club) {
+    $data=DB::table('club')->where('id',$club)->first();
+    $img=DB::table('media')->where('model_id',$club)->first();
+    $event=DB::table('event')->where('club_id',$club)->get();
+    return view('Club.aboutClub',compact('data','img'),['event'=>$event]);
 });
 
-// item event
-Route::get('Club/Events/', function () {
-    return view('Club/Events/index');
+// organizationalChart club
+Route::get('Club.organizationalChart/{club}', function ($club) {
+    $data=DB::table('club')->where('id',$club)->first();
+    $img=DB::table('media')->where('model_id',$club)->first();
+    $event=DB::table('event')->where('club_id',$club)->get();
+    return view('Club.organizationalChart',compact('data','img'),['event'=>$event]);
 });
-Route::get('Club/Events/event', function () {
-    return view('Club/Events/event');
+// membership club
+Route::get('Club.membership/{club}', function ($club) {
+    $data=DB::table('club')->where('id',$club)->first();
+    $img=DB::table('media')->where('model_id',$club)->first();
+    $event=DB::table('event')->where('club_id',$club)->get();
+    return view('Club.membership',compact('data','img'),['event'=>$event]);
 });
-Route::get('Club/Events/competition', function () {
-    return view('Club/Events/competition');
+// Batches club
+Route::get('Club.batches/{club}', function ($club) {
+    $data=DB::table('club')->where('id',$club)->first();
+    $img=DB::table('media')->where('model_id',$club)->first();
+    $event=DB::table('event')->where('club_id',$club)->get();
+    return view('Club.batches',compact('data','img'),['event'=>$event]);
 });
-Route::get('Club/Events/gallery', function () {
-    return view('Club/Events/gallery');
+
+// all event index 
+Route::get('Club.Events.index/{club}', function ($club) {
+    $data=DB::table('club')->where('id',$club)->first();
+    $category_event=DB::table('category')->where('name','event')->get();
+    $event=DB::table('event')->where('club_id',$club)->get();
+    $imgevent=DB::table('media')->where('model_type','App\Models\Event')->get();
+    // dd($event);
+    return view('Club.Events.index',compact('data','imgevent','category_event'),['event'=>$event]);
 });
-Route::get('User/', function () {
-    return view('User/index');
+// event page
+Route::get('Club.Events.event/{club}', function ($club) {
+    $data=DB::table('club')->where('id',$club)->first();
+    $category_event=DB::table('category')->where('name','event')->get();
+    $event=DB::table('event')->where('club_id',$club)->get();
+    $imgevent=DB::table('media')->where('model_type','App\Models\Event')->get();
+    // dd($event);
+    return view('Club.Events.event',compact('data','imgevent','category_event'),['event'=>$event]);
 });
-Route::get('User/participation', function () {
-    return view('User/participation');
+// competition page
+Route::get('Club.Events.competition/{club}', function ($club) {
+    $data=DB::table('club')->where('id',$club)->first();
+    $category_event=DB::table('category')->where('name','event')->get();
+    $event=DB::table('event')->where('club_id',$club)->get();
+    $imgevent=DB::table('media')->where('model_type','App\Models\Event')->get();
+    // dd($event);
+    return view('Club.Events.competition',compact('data','imgevent','category_event'),['event'=>$event]);
+});
+// gallery page
+Route::get('Club.Events.gallery/{club}', function ($club) {
+    $data=DB::table('club')->where('id',$club)->first();
+    $category_event=DB::table('category')->where('name','gallery')->get();
+    $event=DB::table('event')->where('club_id',$club)->get();
+    $imgevent=DB::table('media')->where('model_type','App\Models\Event')->get();
+    return view('Club.Events.gallery',compact('data','imgevent','category_event'),['event'=>$event]);
 });
 
 Route::craftablePro('admin');
@@ -69,6 +115,16 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::post('clubs/bulk-destroy', [App\Http\Controllers\CraftablePro\ClubController::class, 'bulkDestroy'])->name('clubs.bulk-destroy');
 });
 
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('clubstudent', [App\Http\Controllers\CraftablePro\ClubStudentController::class, 'index'])->name('clubstudent.index');
+});
+
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('participationhistory', [App\Http\Controllers\CraftablePro\ParticipationHistory::class, 'index'])->name('participationhistory.index');
+});
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('applications', [App\Http\Controllers\CraftablePro\Applications::class, 'index'])->name('applications.index');
+});
 
 /* Auto-generated admin routes */
 Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
@@ -94,13 +150,50 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
 });
 
 
+
 /* Auto-generated admin routes */
 Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
-    Route::get('club-pages', [App\Http\Controllers\CraftablePro\ClubPageController::class, 'index'])->name('club-pages.index');
-    Route::get('club-pages/create', [App\Http\Controllers\CraftablePro\ClubPageController::class, 'create'])->name('club-pages.create');
-    Route::post('club-pages', [App\Http\Controllers\CraftablePro\ClubPageController::class, 'store'])->name('club-pages.store');
-    Route::get('club-pages/edit/{clubPage}', [App\Http\Controllers\CraftablePro\ClubPageController::class, 'edit'])->name('club-pages.edit');
-    Route::match(['put', 'patch'], 'club-pages/{clubPage}', [App\Http\Controllers\CraftablePro\ClubPageController::class, 'update'])->name('club-pages.update');
-    Route::delete('club-pages/{clubPage}', [App\Http\Controllers\CraftablePro\ClubPageController::class, 'destroy'])->name('club-pages.destroy');
-    Route::post('club-pages/bulk-destroy', [App\Http\Controllers\CraftablePro\ClubPageController::class, 'bulkDestroy'])->name('club-pages.bulk-destroy');
+    Route::get('info-users', [App\Http\Controllers\CraftablePro\InfoUserController::class, 'index'])->name('info-users.index');
+    Route::get('info-users/create', [App\Http\Controllers\CraftablePro\InfoUserController::class, 'create'])->name('info-users.create');
+    Route::post('info-users', [App\Http\Controllers\CraftablePro\InfoUserController::class, 'store'])->name('info-users.store');
+    Route::get('info-users/edit/{infoUser}', [App\Http\Controllers\CraftablePro\InfoUserController::class, 'edit'])->name('info-users.edit');
+    Route::match(['put', 'patch'], 'info-users/{infoUser}', [App\Http\Controllers\CraftablePro\InfoUserController::class, 'update'])->name('info-users.update');
+    Route::delete('info-users/{infoUser}', [App\Http\Controllers\CraftablePro\InfoUserController::class, 'destroy'])->name('info-users.destroy');
+    Route::post('info-users/bulk-destroy', [App\Http\Controllers\CraftablePro\InfoUserController::class, 'bulkDestroy'])->name('info-users.bulk-destroy');
+});
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('role-clubs', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'index'])->name('role-clubs.index');
+    Route::get('role-clubs/create', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'create'])->name('role-clubs.create');
+    Route::post('role-clubs', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'store'])->name('role-clubs.store');
+    Route::get('role-clubs/edit/{roleClub}', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'edit'])->name('role-clubs.edit');
+    Route::match(['put', 'patch'], 'role-clubs/{roleClub}', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'update'])->name('role-clubs.update');
+    Route::delete('role-clubs/{roleClub}', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'destroy'])->name('role-clubs.destroy');
+    Route::post('role-clubs/bulk-destroy', [App\Http\Controllers\CraftablePro\RoleClubController::class, 'bulkDestroy'])->name('role-clubs.bulk-destroy');
+});
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('sub-clubs', [App\Http\Controllers\CraftablePro\SubClubController::class, 'index'])->name('sub-clubs.index');
+    Route::get('sub-clubs/create', [App\Http\Controllers\CraftablePro\SubClubController::class, 'create'])->name('sub-clubs.create');
+    Route::post('sub-clubs', [App\Http\Controllers\CraftablePro\SubClubController::class, 'store'])->name('sub-clubs.store');
+    Route::get('sub-clubs/edit/{subClub}', [App\Http\Controllers\CraftablePro\SubClubController::class, 'edit'])->name('sub-clubs.edit');
+    Route::match(['put', 'patch'], 'sub-clubs/{subClub}', [App\Http\Controllers\CraftablePro\SubClubController::class, 'update'])->name('sub-clubs.update');
+    Route::delete('sub-clubs/{subClub}', [App\Http\Controllers\CraftablePro\SubClubController::class, 'destroy'])->name('sub-clubs.destroy');
+    Route::post('sub-clubs/bulk-destroy', [App\Http\Controllers\CraftablePro\SubClubController::class, 'bulkDestroy'])->name('sub-clubs.bulk-destroy');
+});
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('sub-roles', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'index'])->name('sub-roles.index');
+    Route::get('sub-roles/create', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'create'])->name('sub-roles.create');
+    Route::post('sub-roles', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'store'])->name('sub-roles.store');
+    Route::get('sub-roles/edit/{subRole}', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'edit'])->name('sub-roles.edit');
+    Route::match(['put', 'patch'], 'sub-roles/{subRole}', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'update'])->name('sub-roles.update');
+    Route::delete('sub-roles/{subRole}', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'destroy'])->name('sub-roles.destroy');
+    Route::post('sub-roles/bulk-destroy', [App\Http\Controllers\CraftablePro\SubRoleController::class, 'bulkDestroy'])->name('sub-roles.bulk-destroy');
 });
