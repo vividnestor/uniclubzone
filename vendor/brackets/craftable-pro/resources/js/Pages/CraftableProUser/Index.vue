@@ -1,0 +1,470 @@
+<template>
+  <PageHeader :title="$t( 'Member List')">
+    <Modal alignButtons="right" size="sm">
+      <template #trigger="{ setIsOpen }">
+        <div class=" flex items-center justify-end">
+          <div class=" mr-5">
+            <div v-for="infoUser in infoUsers">
+              <a v-if="infoUser.craftable_pro_users_id==user.id" style="background-color:darkorange;border-radius: 20px;padding:10px;color:white" 
+              :href="route('craftable-pro.info-users.edit',infoUser.id)">
+                Update Your Info
+              </a>
+            </div>
+          </div>
+          <div class=" mr-5">
+            <a style="background-color:darkorange;border-radius: 20px;padding:10px;color:white" 
+            :href="route('craftable-pro.info-users.create',user.id)">
+              Complete Your Info
+            </a>
+          </div>
+          <div v-for="items in craftableProUsers.data" :key="items">
+            <div v-for="item in items.roles" :key="item">
+              <Button style="background-color:darkorange;border-radius: 20px" v-if="item.pivot.model_id === user.id && (item.name ==='administrator'||item.name==='club_manager')" @click="() => setIsOpen(true)" :leftIcon="PlusIcon">
+                {{ $t("craftable-pro", "Invite user") }}
+              </Button>
+            </div> 
+          </div>
+        </div>
+      </template>
+      <template #title>
+        {{ $t("craftable-pro", "Invite user") }}
+      </template>
+      <template #content>
+        <div class="mt-4 flex flex-col gap-2">
+          <TextInput
+            v-model="form.email"
+            name="email"
+            :label="$t('craftable-pro', 'Email')"
+          />
+          <Multiselect
+            v-model="form.role_id"
+            name="role"
+            :label="$t('craftable-pro', 'Role')"
+            mode="single"
+            :options="filterOptions.roles"
+            optionsValueProp="id"
+            optionsLabel="name"
+          />
+        </div>
+      </template>
+      <template #buttons="{ setIsOpen }">
+        <Button size="sm" :loading="form.processing" @click="submit(setIsOpen)">
+          {{ $t("craftable-pro", "Invite user") }}
+        </Button>
+        <Button
+          size="sm"
+          color="gray"
+          variant="outline"
+          @click.prevent="() => setIsOpen()"
+        >
+          {{ $t("craftable-pro", "Cancel") }}
+        </Button>
+      </template>
+    </Modal>
+  </PageHeader>
+
+  <PageContent>
+    <Listing
+      :baseUrl="route('craftable-pro.craftable-pro-users.index')"
+      :data="craftableProUsers"
+      dataKey="craftableProUsers"
+      :withBulkSelect="false"
+    >
+      
+      
+     
+      <template #tableHead>
+        <ListingHeaderCell  sortBy="id" class="w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("No") }}
+        </ListingHeaderCell>
+        <ListingHeaderCell  sortBy="id" class="w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Name") }}
+        </ListingHeaderCell>
+
+        <ListingHeaderCell sortBy="first_name" class=" w-3/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Email") }}
+        </ListingHeaderCell>
+
+        <ListingHeaderCell class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Gender") }}
+        </ListingHeaderCell>
+
+        <!-- <ListingHeaderCell class="text-center w-12">
+          {{ $t("craftable-pro", "2FA") }}
+        </ListingHeaderCell> -->
+
+        <ListingHeaderCell class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Role") }}
+        </ListingHeaderCell>
+        <ListingHeaderCell class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Department") }}
+        </ListingHeaderCell>
+        <ListingHeaderCell  class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Year") }}
+        </ListingHeaderCell>
+        <ListingHeaderCell  class=" w-2/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("Phone") }}
+        </ListingHeaderCell>
+
+        <!-- <ListingHeaderCell
+          v-if="$page.props.config?.craftable_pro?.track_user_last_active_time"
+          sortBy="last_active_at"
+        >
+          {{ $t("craftable-pro", "Last active") }}
+        </ListingHeaderCell> -->
+
+        <ListingHeaderCell  class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t("craftable-pro", "Status") }}
+        </ListingHeaderCell>
+        <ListingHeaderCell  class=" w-1/12 text-center" style="color:black;font-weight: bold">
+          {{ $t( "Action") }}
+        </ListingHeaderCell>
+
+      </template>
+      <!-- <div v-for="roles in craftableProUsers.data">
+        <div v-for="role in roles.roles">
+        
+        </div>
+      </div> -->
+      <template #tableRow="{ item, action }: any">
+        <template v-for=" infoUser in infoUsers">
+          <template v-if="infoUser.craftable_pro_users_id==item.id">
+            <ListingDataCell class=" w-1/12 text-center" style="color:black">
+              {{ item.id }}
+            </ListingDataCell>
+            <ListingDataCell class=" w-1/12 text-start" style="color:black">
+              {{ item.first_name+' '+item.last_name }}
+            </ListingDataCell>
+    
+            <ListingDataCell class=" w-3/12 text-start" style="color:black">
+              <div class="flex items-center">
+                <Avatar
+                  :src="item.avatar_url"
+                  :name="`${item.first_name} ${item.last_name}`"
+                />
+                <div class="ml-4">
+                  <div class="font-medium text-gray-900">
+                    <!-- TODO: maybe have full_name attribute? -->
+                    {{ item.first_name }} {{ item.last_name }}
+                  </div>
+                  <div class="text-gray-500">{{ item.email }}</div>
+                </div>
+              </div>
+            </ListingDataCell>
+            <ListingDataCell class=" w-1/12 text-center">
+              <span class="text-sm font-normal leading-5 text-black">
+                {{ infoUser.gender }}
+              </span>
+            </ListingDataCell>
+    
+            <ListingDataCell class=" w-1/12 text-center">
+              <span class="text-sm font-normal leading-5 text-black">
+                {{ item.roles.length > 0 ? item.roles[0].name : "" }}
+              </span>
+            </ListingDataCell>
+    
+            <ListingDataCell class=" w-1/12 text-center">
+              <span class="text-sm font-normal leading-5 text-black">
+                {{ infoUser.department }}
+              </span>
+            </ListingDataCell>
+    
+            <ListingDataCell class=" w-1/12 text-center">
+              <span class="text-sm font-normal leading-5 text-black">
+                {{ 'Year '+infoUser.year }}
+              </span>
+            </ListingDataCell>
+            <ListingDataCell class=" w-2/12 text-center">
+              <span class="text-sm font-normal leading-5 text-black">
+                {{ infoUser.phone }}
+              </span>
+            </ListingDataCell>
+    
+            <ListingDataCell class=" w-1/12 text-center">
+              <template v-if="item.email_verified_at">
+                <div v-if="item.active">
+                  <Tag :icon="CheckCircleIcon" color="success" rounded size="sm">
+                    {{ $t("craftable-pro", "Active") }}
+                  </Tag>
+                </div>
+    
+                <div v-else>
+                  <Tag :icon="XCircleIcon" color="gray" rounded size="sm">
+                    {{ $t("craftable-pro", "Inactive") }}
+                  </Tag>
+                </div>
+              </template>
+    
+              <div v-else>
+                <Tag
+                  :icon="ExclamationCircleIcon"
+                  color="warning"
+                  rounded
+                  size="sm"
+                >
+                  {{ $t("craftable-pro", "Pending") }}
+                </Tag>
+              </div>
+            </ListingDataCell>
+    
+            <ListingDataCell class=" w-1/12 text-center">
+              <div class="flex justify-end">
+                <Dropdown
+                  noContentPadding
+                  :placement="isLastThreeItems(item) ? 'bottom-end' : 'top-end'"
+                >
+                  <template #button>
+                    <IconButton
+                      :icon="EllipsisVerticalIcon"
+                      variant="outline"
+                      color="gray"
+                      size="sm"
+                    />
+                  </template>
+    
+                  <template #content class="bg-red">
+                    <div class="py-1">
+                      <DropdownItem
+                        v-can="'craftable-pro.craftable-pro-user.edit'"
+                        :href="`${item.resource_url}/edit`"
+                        :icon="PencilSquareIcon"
+                      >
+                        {{ $t("craftable-pro", "Edit") }}
+                      </DropdownItem>
+    
+                      <template v-if="item.email_verified_at">
+                        <DropdownItem
+                          @click="changeActiveStatus(item)"
+                          :icon="item.active ? NoSymbolIcon : ShieldCheckIcon"
+                        >
+                          {{
+                            item.active
+                              ? $t("craftable-pro", "Deactivate")
+                              : $t("craftable-pro", "Activate")
+                          }}
+                        </DropdownItem>
+                      </template>
+    
+                      <DropdownItem
+                        v-else
+                        @click="
+                          () => {
+                            action(
+                              'post',
+                              `craftable-pro-users/${item.id}/resend-verification-email`
+                            );
+                          }
+                        "
+                        :icon="EnvelopeIcon"
+                      >
+                        {{ $t("craftable-pro", "Resend invitation") }}
+                      </DropdownItem>
+    
+                      <div>
+                        <Modal
+                          type="danger"
+                          v-can="'craftable-pro.craftable-pro-user.destroy'"
+                        >
+                          <template #trigger="{ setIsOpen }">
+                            <div
+                              @click="() => setIsOpen(true)"
+                              class="flex cursor-pointer gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                            >
+                              <div class="flex flex-col justify-center">
+                                <TrashIcon class="h-4 w-4" />
+                              </div>
+                              {{ $t("craftable-pro", "Delete") }}
+                            </div>
+                          </template>
+    
+                          <template #title>
+                            {{ $t("craftable-pro", "Delete user") }}
+                          </template>
+    
+                          <template #content>
+                            {{
+                              $t(
+                                "craftable-pro",
+                                "Are you sure you want to delete selected user? All of his data will be permanently removed from our servers forever. This action cannot be undone."
+                              )
+                            }}
+                          </template>
+    
+                          <template #buttons="{ setIsOpen }">
+                            <Button
+                              @click.prevent="
+                                () => {
+                                  action('delete', item.resource_url, {
+                                    onFinish: () => setIsOpen(false),
+                                  });
+                                }
+                              "
+                              color="danger"
+                            >
+                              {{ $t("craftable-pro", "Delete") }}
+                            </Button>
+                            <Button
+                              @click.prevent="() => setIsOpen()"
+                              color="gray"
+                              variant="outline"
+                            >
+                              {{ $t("craftable-pro", "Cancel") }}
+                            </Button>
+                          </template>
+                        </Modal>
+                      </div>
+    
+                      <DropdownItem
+                        v-can="'craftable-pro.craftable-pro-user.impersonal-login'"
+                        v-if="item.id !== $page.props.auth.user.id"
+                        :href="
+                          route(
+                            'craftable-pro.craftable-pro-user.impersonalLogin',
+                            {
+                              craftableProUser: item.id,
+                            }
+                          )
+                        "
+                        :icon="ArrowLeftOnRectangleIcon"
+                      >
+                        {{ $t("craftable-pro", "Log as user") }}
+                      </DropdownItem>
+                    </div>
+                  </template>
+                </Dropdown>
+              </div>
+            </ListingDataCell>
+
+          </template>
+        </template>
+      </template>
+    </Listing>
+  </PageContent>
+</template>
+
+<script setup lang="ts">
+
+import {
+  PlusIcon,
+  TrashIcon,
+  PencilSquareIcon,
+  ClockIcon,
+  ArrowLeftOnRectangleIcon,
+  EllipsisVerticalIcon,
+  EnvelopeIcon,
+} from "@heroicons/vue/24/outline";
+import { NoSymbolIcon, ShieldCheckIcon } from "@heroicons/vue/24/solid";
+import {
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  XCircleIcon,
+} from "@heroicons/vue/20/solid";
+import {
+  CheckCircleIcon as CheckCircleIconOutline,
+  ExclamationCircleIcon as ExclamationCircleIconOutline,
+  MinusCircleIcon as MinusCircleIconOutline,
+} from "@heroicons/vue/24/outline";
+import {
+  PageHeader,
+  PageContent,
+  Button,
+  Listing,
+  Avatar,
+  ListingHeaderCell,
+  ListingDataCell,
+  Modal,
+  IconButton,
+  FiltersDropdown,
+  Multiselect,
+  Tag,
+  Dropdown,
+  DropdownItem,
+  TextInput,
+} from "craftable-pro/Components";
+import { PaginatedCollection } from "craftable-pro/types/pagination";
+import type { CraftableProUser,Info } from "craftable-pro/types/models";
+import { useAction } from "craftable-pro/hooks/useAction";
+import { useListingFilters } from "craftable-pro/hooks/useListingFilters";
+import { PageProps } from "craftable-pro/types/page";
+import { wTrans } from "craftable-pro/plugins/laravel-vue-i18n";
+import dayjs from "dayjs";
+import { CraftableProUserInviteUserForm } from "./types";
+import { useToast } from "@brackets/vue-toastification";
+import { Link, usePage, useForm } from "@inertiajs/vue3";
+import {Tooltip} from "../../Components";
+import { useUser } from "../../hooks/useUser";
+
+const { user } = useUser();
+
+
+interface Props {
+  craftableProUsers: PaginatedCollection<CraftableProUser>;
+  filterOptions: {
+    roles: string[];
+  };
+  infoUsers:PaginatedCollection<Info>;
+}
+const props = defineProps<Props>();
+const { action } = useAction();
+
+const changeActiveStatus = (item: CraftableProUser) => {
+  action("patch", route("craftable-pro.craftable-pro-users.update", item.id), {
+    active: !item.active,
+  });
+};
+
+const statusOptions = [
+  { value: "true", label: wTrans("craftable-pro", "Active") },
+  { value: "false", label: wTrans("craftable-pro", "Inactive") },
+  { value: "pending", label: wTrans("craftable-pro", "Pending") },
+];
+
+const twoFactorAuthOptions = [
+  { value: "true", label: wTrans("craftable-pro", "Active") },
+  { value: "false", label: wTrans("craftable-pro", "Inactive") },
+];
+
+
+const { filtersForm, resetFilters, activeFiltersCount } = useListingFilters(
+  "/admin/craftable-pro-users",
+  {
+    role: (usePage().props as PageProps).filter?.role ?? null,
+    status: (usePage().props as PageProps).filter?.status ?? null,
+    two_factor_auth_enabled: (usePage().props as PageProps).filter?.two_factor_auth_enabled ?? null,
+  }
+);
+
+const isLastThreeItems = (item: CraftableProUser) => {
+  const arrLength = props.craftableProUsers.data.length;
+
+  let lastElement = props.craftableProUsers.data[arrLength - 1];
+  let beforeLastElement = props.craftableProUsers.data[arrLength - 2];
+
+  return lastElement.id === item.id || beforeLastElement.id === item.id;
+};
+
+const toast = useToast();
+
+const form = useForm({
+  email: "",
+  role_id: "",
+});
+
+const submit = (closeModal: CallableFunction) => {
+  form.post(route("craftable-pro.craftable-pro-user.invite-user"), {
+    onSuccess: () => {
+      form.email = "";
+      form.role_id = "";
+
+      closeModal();
+
+      toast.success(usePage().props?.message);
+    },
+    onError: (errors: Errors) => {
+      if (errors && Object.values(errors)) {
+        toast.error(Object.values(errors)[0]);
+      }
+    },
+  });
+};
+</script>

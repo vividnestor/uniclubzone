@@ -1,0 +1,1 @@
+import{u as e}from"./index-3d1a2934.js";import{d as r}from"./vendor-fc9552fb.js";const a=r({__name:"Index",props:{craftableProUsers:{},roles:{},filterOptions:{},users:{},club:{}},setup(s){return e(),(o,t)=>null}});export{a as default};

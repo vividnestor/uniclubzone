@@ -1,0 +1,1 @@
+import{d as e,U as o,j as t}from"./vendor-fc9552fb.js";const d=e({__name:"TabGroup",props:{variant:{default:"enclosed"}},setup(r){return o("tabGroupVariant",r.variant),(a,s)=>t(a.$slots,"default")}});export{d as _};

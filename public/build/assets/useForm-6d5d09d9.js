@@ -1,0 +1,1 @@
+import{aj as r,an as i}from"./vendor-fc9552fb.js";function b(u,e,n="put",a){const o=r(),c={onSuccess:s=>{s.props.message&&o.success(s.props.message)},onError:s=>{s&&o.error(Object.values(s)[0])},...a},t=i(u);return{form:t,submit:()=>{t==null||t.submit(n,e,c)}}}export{b as u};
