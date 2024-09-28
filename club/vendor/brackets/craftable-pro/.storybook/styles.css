@@ -1,9 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer utilities {
-    .prose :where(iframe):not(:where([class~="not-prose"] *)) {
-        @apply aspect-video rounded-md
-    }
-}
