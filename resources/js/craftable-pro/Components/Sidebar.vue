@@ -37,7 +37,7 @@
           :icon="CubeTransparentIcon"
           v-can="'craftable-pro.role-club.index'"
         >
-          {{ 'User Club' }}
+          {{ 'Assign User To Club' }}
         </SidebarItem>
         <SidebarItem
           :href="route('craftable-pro.sub-roles.index')"

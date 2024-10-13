@@ -1,7 +1,7 @@
 <template>
   
   <div>
-    <div class="w-4/5 m-auto grid grid-cols-2 overflow-y-scroll mb-10">
+    <div class="w-4/5 m-auto grid grid-cols-2 mb-10">
         <div class=" col-span-2">
             <h1 class=" text-center font-bold text-4xl p-10 text-orange-700 decoration-orange-700 underline">MY CLUBS</h1>
           </div>

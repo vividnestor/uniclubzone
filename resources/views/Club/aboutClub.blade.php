@@ -77,9 +77,9 @@
     <div class=" w-9/12 m-auto h-96 mb-80">
         <div class="w-full grid grid-cols-3 gap-4">
             <div class=" col-span-1">
-            <img class="w-full h-80" src="{{ asset('media/' . $img->id . '/' . $img->file_name) }}" alt="">
+            <img class="w-auto h-auto rounded-2xl p-2" src="{{ asset('media/' . $img->id . '/' . $img->file_name) }}" alt="">
             </div>
-            <div class=" col-span-2 items-center justify-center flex">
+            <div class=" col-span-2 items-center justify-left m-2 flex">
                 <div class="block">
                     <h3 class=" text-orange-700 text-3xl text-start mb-10 font-bold">{{ $data->name }}</h3>
                     <p>

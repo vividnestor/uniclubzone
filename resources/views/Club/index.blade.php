@@ -88,9 +88,9 @@
             @foreach ($event as $events)
                 @if($imgevents->model_id===$events->id)
                 <div class=" col-span-1 h-auto">
-                    <img class="w-full h-80" src="{{ asset('media/' . $imgevents->id . '/' . $imgevents->file_name) }}" alt="">
+                    <img class="w-full h-auto" src="{{ asset('media/' . $imgevents->id . '/' . $imgevents->file_name) }}" alt="">
                     <h3 class=" font-bold mt-5">{{$events->title}}</h3>
-                    <p class=" text-1xl text-slate-600">{{$events->content}}</p>
+                    <p class=" text-1xl text-slate-600 line-clamp-3">{{$events->content}}</p>
                 </div>
                 @endif
             @endforeach

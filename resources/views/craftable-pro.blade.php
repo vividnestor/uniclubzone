@@ -9,6 +9,8 @@
 
     @routes
 
+@vite(['resources/js/craftable-pro/index.ts', 'resources/css/craftable-pro.css'])
+
   @inertiaHead
 </head>
 

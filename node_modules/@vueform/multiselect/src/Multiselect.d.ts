@@ -256,7 +256,7 @@ declare class Multiselect implements ReturnType<typeof defineComponent> {
   hasMore: boolean;
   hasSelected: boolean;
   infiniteLoader: any;
-  input: any;
+  input: HTMLInputElement;
   internalValue: any;
   isActive: boolean;
   isDisabled: boolean;
